@@ -5,15 +5,21 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "Your Name",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "child_process": "^1.0.2",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
   }
 }
