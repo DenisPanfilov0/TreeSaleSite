@@ -10,6 +10,30 @@ import RegistrationForm from './RegistrationForm';
 const { Header, Content, Footer } = Layout;
 
 
+const App = () => {
+  return (
+    <Router>
+      <Layout>
+        <AppHeader />
+        <Content className="site-layout" style={{ padding: '0 50px' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<AuthForm />} />
+            <Route path="/register" element={<RegistrationForm />} />
+          </Routes>
+        </Content>
+      </Layout>
+    </Router>
+  );
+};
+
+const Home = () => {
+  return <div>Home Page Content</div>;
+};
+
+export default App;
+
+
 // function App() {
 //   // const navigate = useNavigate();
 
@@ -45,40 +69,18 @@ const { Header, Content, Footer } = Layout;
 // }
 
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <Header>
-              <AppHeader />
-              </Header>
-              <Content className="site-layout" style={{ padding: '0 50px' }} />
-            </Layout>
-          }
-        />
-        <Route path="/login" element={<AuthForm />} />
-        <Route path="/register" element={<RegistrationForm />} />
-      </Routes>
-    </Router>
-  );
-};
 
-function Root() {
-  // const navigate = useNavigate();
-  return (
-    <div>
-      {/* <button onClick={() => navigate(-1)}>go back</button> */}
-      {/* <button type="button" onClick={() => navigate('/login')}> Log in </button> */}
-      <Routes>
-        <Route path="/login" element={<AuthForm />} />
-        <Route path="/register" element={<RegistrationForm />} />
-      </Routes>
-    </div>
-  );
-}
 
-export default App;
+// function Root() {
+//   // const navigate = useNavigate();
+//   return (
+//     <div>
+//       {/* <button onClick={() => navigate(-1)}>go back</button> */}
+//       {/* <button type="button" onClick={() => navigate('/login')}> Log in </button> */}
+//       <Routes>
+//         <Route path="/login" element={<AuthForm />} />
+//         <Route path="/register" element={<RegistrationForm />} />
+//       </Routes>
+//     </div>
+//   );
+// }
