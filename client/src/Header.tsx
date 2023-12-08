@@ -18,7 +18,9 @@ const AppHeader = () => {
         alignItems: 'center',
       }}
     >
-      <Menu theme="dark" mode="horizontal">
+        <button type="button" onClick={() => navigate('/login')}> Log in </button>
+        <button type="button" onClick={() => navigate('/register')}> Register </button>
+      {/* <Menu theme="dark" mode="horizontal">
         <Menu.Item key="1">
           <Link to="/">Home</Link>
         </Menu.Item>
@@ -28,7 +30,7 @@ const AppHeader = () => {
         <Menu.Item key="3">
           <Link to="/register">Register</Link>
         </Menu.Item>
-      </Menu>
+      </Menu> */}
     </Header>
   );
 };
