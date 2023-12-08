@@ -20,6 +20,8 @@ const AppHeader = () => {
     >
         <button type="button" onClick={() => navigate('/login')}> Log in </button>
         <button type="button" onClick={() => navigate('/register')}> Register </button>
+
+        
       {/* <Menu theme="dark" mode="horizontal">
         <Menu.Item key="1">
           <Link to="/">Home</Link>
