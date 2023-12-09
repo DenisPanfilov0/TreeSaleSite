@@ -1,4 +1,4 @@
-const { createStore, createEvent } = require('effector');
+import { createStore, createEvent } from 'effector';
 
 const accessTokenStore = createStore(null);
 const refreshTokenStore = createStore(null);
@@ -9,7 +9,7 @@ const setRefreshToken = createEvent();
 accessTokenStore.on(setAccessToken, (_, token) => token);
 refreshTokenStore.on(setRefreshToken, (_, token) => token);
 
-module.exports = {
+export {
   accessTokenStore,
   refreshTokenStore,
   setAccessToken,

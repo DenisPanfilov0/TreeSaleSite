@@ -7,13 +7,6 @@ const bcrypt = require('bcrypt');
 const { authenticateUser } = require('./src/AauthUtils.js');
 const jwt = require('jsonwebtoken');
 
-const {
-  accessTokenStore,
-  refreshTokenStore,
-  setAccessToken,
-  setRefreshToken,
-} = require('./src/store.js');
-
 mongoose.connect('mongodb+srv://Alexander:1q2w3e4r@cluster0.jwcpdzh.mongodb.net/all_users', {
   // useUnifiedTopology: true,
   // useNewUrlParser: true,
@@ -100,11 +93,6 @@ app.post('/api/login', async (req, res) => {
 
       setAccessToken(accessToken);
       setRefreshToken(refreshToken);
-
-
-      // // Редирект на нужный роут с именем пользователя
-      // const redirectPath = `/lk_${user.username}`;
-      // res.redirect(302, `http://localhost:3001${redirectPath}`);
 
       console.log(user.user._id);
 
