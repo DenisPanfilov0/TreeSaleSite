@@ -106,12 +106,12 @@ app.post('/api/login', async (req, res) => {
       // const redirectPath = `/lk_${user.username}`;
       // res.redirect(302, `http://localhost:3001${redirectPath}`);
 
-      console.log(user.username);
+      console.log(user.user._id);
 
       res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 60 * 1000 });
       res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
-      res.json({ success: true, accessToken, refreshToken, userDate: user._id/*{ _id: user._id, username: user.username, email: user.email, isAdmin: user.isAdmin }*/ });
+      res.json({ success: true, accessToken, refreshToken, userDate: { _id: user.user._id, username: user.user.username, email: user.user.email, isAdmin: user.user.isAdmin } });
     } else {
       res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
