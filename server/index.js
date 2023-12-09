@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const { authenticateUser } = require('./src/AauthUtils.js');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const register = require('./src/RegisterUtils.js')
 
 mongoose.connect('mongodb+srv://Alexander:1q2w3e4r@cluster0.jwcpdzh.mongodb.net/all_users', {
   // useUnifiedTopology: true,
@@ -92,10 +93,28 @@ app.post('/api/login', async (req, res) => {
       const accessToken = jwt.sign({ _id: user._id }, 'your-secret-key', { expiresIn: '1m' });
       const refreshToken = jwt.sign({ _id: user._id }, 'refresh-secret-key', { expiresIn: '7d' });
 
-      res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 60 * 1000 });
-      res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+      res.cookie(
+        'accessToken',
+        accessToken,
+        {
+          httpOnly: true,
+          maxAge: 60 * 1000,
+          sameSite: 'None',
+          secure: true,
+          path: '/',
+        });
+      res.cookie(
+        'refreshToken',
+        refreshToken,
+        {
+          httpOnly: true,
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+          sameSite: 'None',
+          secure: true,
+          path: '/',
+        });
 
-      res.json({ success: true, accessToken, refreshToken, userDate: { _id: user.user._id, username: user.user.username, email: user.user.email, isAdmin: user.user.isAdmin } });
+      res.json({ success: true, userDate: { _id: user.user._id, username: user.user.username, email: user.user.email, isAdmin: user.user.isAdmin } });
     } else {
       res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
@@ -135,6 +154,12 @@ app.post('/api/check-tokens', (req, res) => {
 
   // res.json({ success: false, error: 'Invalid tokens' });
 });
+
+app.post('/api/register', (req, res) => {
+  const { username, email, password } = req.body;
+  register.saveUser({ username, email, password })
+  res.status(200).json({ message: 'Вы зарегистрированы' })
+})
 
 app.get('/', (req, res) => {
   res.send('Привет, мир!');

@@ -15,6 +15,7 @@
     "antd": "^5.12.1",
     "axios": "^1.6.2",
     "effector": "^23.0.0",
+    "effector-react": "^23.0.1",
     "react": "^18.2.0",
     "react-cookie": "^6.1.1",
     "react-dom": "^18.2.0",
