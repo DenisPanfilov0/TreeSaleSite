@@ -1,5 +1,5 @@
 // const Users = require('./src/UserModel.tsx');
-const User = require('./UserModel.ts');
+const User = require('./UserModel.js');
 const bcrypt = require('bcrypt');
 
 const authenticateUser = async (login, password) => {
@@ -12,7 +12,7 @@ const authenticateUser = async (login, password) => {
 
       if (isPasswordValid) {
         const token = existingUser.generateAuthToken();
-        return { success: true, token };
+        return { success: true, token, user: existingUser };
       } else {
         return { success: false, error: 'Неверный пароль' };
       }

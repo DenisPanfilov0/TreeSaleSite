@@ -2,9 +2,17 @@ const express = require('express');
 const app = express();
 const port = 3000; 
 const mongoose = require('mongoose');
-const Users = require('./src/UserModel.js/index.ts');
+const Users = require('./src/UserModel.js');
 const bcrypt = require('bcrypt');
-const { authenticateUser } = require('./src/AauthUtils.ts');
+const { authenticateUser } = require('./src/AauthUtils.js');
+const jwt = require('jsonwebtoken');
+
+const {
+  accessTokenStore,
+  refreshTokenStore,
+  setAccessToken,
+  setRefreshToken,
+} = require('./src/store.js');
 
 mongoose.connect('mongodb+srv://Alexander:1q2w3e4r@cluster0.jwcpdzh.mongodb.net/all_users', {
   // useUnifiedTopology: true,
@@ -84,13 +92,53 @@ app.post('/api/login', async (req, res) => {
   const { login, password } = req.body;
 
   try {
-    const result = await authenticateUser(login, password);
+    const user = await authenticateUser(login, password);
 
-    res.json(result);
+    if (user) {
+      const accessToken = jwt.sign({ _id: user._id }, 'your-secret-key', { expiresIn: '1m' });
+      const refreshToken = jwt.sign({ _id: user._id }, 'refresh-secret-key', { expiresIn: '7d' });
+
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+
+
+      // // Редирект на нужный роут с именем пользователя
+      // const redirectPath = `/lk_${user.username}`;
+      // res.redirect(302, `http://localhost:3001${redirectPath}`);
+
+      console.log(user.username);
+
+      res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 60 * 1000 });
+      res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+
+      res.json({ success: true, accessToken, refreshToken, userDate: user._id/*{ _id: user._id, username: user.username, email: user.email, isAdmin: user.isAdmin }*/ });
+    } else {
+      res.status(401).json({ success: false, error: 'Invalid credentials' });
+    }
   } catch (error) {
     console.error('Произошла ошибка при аутентификации:', error);
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
+});
+
+app.post('/api/refresh-token', (req, res) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) {
+    return res.status(401).json({ success: false, error: 'Refresh Token is required' });
+  }
+
+  jwt.verify(refreshToken, 'refresh-secret-key', (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ success: false, error: 'Invalid Refresh Token' });
+    }
+
+    const newAccessToken = jwt.sign({ _id: decoded._id }, 'your-secret-key', { expiresIn: '15m' });
+
+    res.cookie('accessToken', newAccessToken, { httpOnly: true, maxAge: 60 * 1000 });
+
+    res.json({ success: true, accessToken: newAccessToken });
+  });
 });
 
 app.get('/', (req, res) => {

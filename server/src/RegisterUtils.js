@@ -1,4 +1,4 @@
-const User = require('./UserModel.ts');
+const User = require('./UserModel.js');
 
 async function saveUser(id, username, email, password) {
   const newUser = new User({

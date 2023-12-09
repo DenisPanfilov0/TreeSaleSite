@@ -1,11 +1,16 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Link, useNavigate, } from 'react-router-dom';
+import { Layout, Menu, Row, Col, Space } from 'antd';
 
 const { Header } = Layout;
 
 const AppHeader = () => {
   const navigate = useNavigate();
+
+  // const logCookies = () => {
+  //   const cookies = document.cookie;
+  //   console.log('Cookies:', cookies);
+  // };
 
   return (
     <Header
@@ -15,11 +20,16 @@ const AppHeader = () => {
         zIndex: 1,
         width: '100%',
         display: 'flex',
+        justifyContent: 'flex-end',
         alignItems: 'center',
       }}
     >
+        <Space>
+        <button type="button" onClick={() => navigate('/')}> Home </button>
         <button type="button" onClick={() => navigate('/login')}> Log in </button>
         <button type="button" onClick={() => navigate('/register')}> Register </button>
+        {/* <button type="button" onClick={logCookies}> Log Cookies </button> */}
+        </Space>
 
         
       {/* <Menu theme="dark" mode="horizontal">

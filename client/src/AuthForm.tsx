@@ -14,8 +14,11 @@ const App: React.FC = () => {
         password: values.password,
       });
 
+
       if (response.data.success) {
-        console.log('Авторизация успешна. Токен:', response.data.token);
+        console.log('Авторизация успешна. AccessToken:', response.data.accessToken);
+        console.log('RefreshToken:', response.data.refreshToken);
+        console.log('user:', response.data.userDate);
       } else {
         console.error('Ошибка при авторизации:', response.data.error);
       }

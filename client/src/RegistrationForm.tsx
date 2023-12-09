@@ -86,11 +86,12 @@ const App: React.FC = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
-    // const response = await axios.post('http://localhost:3000/api/register', {
-    //     username: values.nickname,
-    //     email: values.email,
-    //     password: values.password,
-    //   });
+    const response = await axios.post('http://localhost:3000/api/register', {
+        username: values.nickname,
+        email: values.email,
+        password: values.password,
+        isAdmin: false,
+      });
     console.log(values);
   };
 
