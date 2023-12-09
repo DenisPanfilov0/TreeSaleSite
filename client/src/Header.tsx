@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
 import { Layout, Menu, Row, Col, Space } from 'antd';
+import axios from 'axios';
+import TokenUtils from './tokenUtils';
+
 
 const { Header } = Layout;
 
@@ -11,6 +14,31 @@ const AppHeader = () => {
   //   const cookies = document.cookie;
   //   console.log('Cookies:', cookies);
   // };
+  
+  // // Функция для проверки токенов
+  // const checkTokens = async () => {
+  //   try {
+  //     const response = await axios.post('http://localhost:3000/api/check-tokens');
+
+  //     if (!response.data.success) {
+  //       console.error('Токены не действительны. Перенаправление на страницу входа.');
+  //       // Реализуйте перенаправление на страницу входа, например, используя navigate
+  //       // navigate('/login');
+  //     }
+  //   } catch (error) {
+  //     console.error('Произошла ошибка при проверке токенов:', error);
+  //   }
+  // };
+
+  // const handleButtonClick = (path: string) => {
+  //   // При каждом нажатии на кнопку вызывайте функцию проверки токенов
+  //   checkTokens();
+
+  //   // Здесь можно добавить дополнительную логику, если необходимо,
+  //   // например, перенаправление на другую страницу
+  //   navigate(path);
+  // };
+  
 
   return (
     <Header
@@ -25,9 +53,9 @@ const AppHeader = () => {
       }}
     >
         <Space>
-        <button type="button" onClick={() => navigate('/')}> Home </button>
-        <button type="button" onClick={() => navigate('/login')}> Log in </button>
-        <button type="button" onClick={() => navigate('/register')}> Register </button>
+        <button type="button" onClick={() => { TokenUtils; navigate('/'); }}> Home </button>
+        <button type="button" onClick={() => { TokenUtils; navigate('/login'); }}> Log in </button>
+        <button type="button" onClick={() => { TokenUtils; navigate('/register'); }}> Register </button>
         {/* <button type="button" onClick={logCookies}> Log Cookies </button> */}
         </Space>
 
@@ -46,5 +74,27 @@ const AppHeader = () => {
     </Header>
   );
 };
+
+// const handleButtonClick = (path: string) => {
+//   // При каждом нажатии на кнопку вызывайте функцию проверки токенов
+//   checkTokens();
+
+//   // Здесь можно добавить дополнительную логику, если необходимо,
+//   // например, перенаправление на другую страницу
+//   navigate(path);
+
+// const checkTokens = async () => {
+//   try {
+//     // Отправьте запрос на сервер для проверки токенов
+//     const response = await axios.post('http://localhost:3000/api/check-tokens');
+
+//     if (!response.data.success) {
+//       console.error('Токены не действительны. Перенаправление на страницу входа.');
+//       // Реализуйте перенаправление на страницу входа, например, используя useNavigate
+//     }
+//   } catch (error) {
+//     console.error('Произошла ошибка при проверке токенов:', error);
+//   }
+// };
 
 export default AppHeader;

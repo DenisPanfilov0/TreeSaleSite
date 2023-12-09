@@ -6,6 +6,7 @@ const Users = require('./src/UserModel.js');
 const bcrypt = require('bcrypt');
 const { authenticateUser } = require('./src/AauthUtils.js');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 mongoose.connect('mongodb+srv://Alexander:1q2w3e4r@cluster0.jwcpdzh.mongodb.net/all_users', {
   // useUnifiedTopology: true,
@@ -91,11 +92,6 @@ app.post('/api/login', async (req, res) => {
       const accessToken = jwt.sign({ _id: user._id }, 'your-secret-key', { expiresIn: '1m' });
       const refreshToken = jwt.sign({ _id: user._id }, 'refresh-secret-key', { expiresIn: '7d' });
 
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
-
-      console.log(user.user._id);
-
       res.cookie('accessToken', accessToken, { httpOnly: true, maxAge: 60 * 1000 });
       res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
 
@@ -129,9 +125,21 @@ app.post('/api/refresh-token', (req, res) => {
   });
 });
 
+app.post('/api/check-tokens', (req, res) => {
+  // const accessToken = req.cookies.accessToken;
+  // const refreshToken = req.cookies.refreshToken;
+
+  // console.log(accessToken);
+  // console.log(refreshToken);
+  console.log('проверяет токент на серве');
+
+  // res.json({ success: false, error: 'Invalid tokens' });
+});
+
 app.get('/', (req, res) => {
   res.send('Привет, мир!');
 });
+
 
 app.listen(port, () => {
   console.log(`Сервер запущен на порту ${port}`);
