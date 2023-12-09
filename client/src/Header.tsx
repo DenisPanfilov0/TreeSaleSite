@@ -53,9 +53,9 @@ const AppHeader = () => {
       }}
     >
         <Space>
-        <button type="button" onClick={() => { TokenUtils; navigate('/'); }}> Home </button>
-        <button type="button" onClick={() => { TokenUtils; navigate('/login'); }}> Log in </button>
-        <button type="button" onClick={() => { TokenUtils; navigate('/register'); }}> Register </button>
+        <button type="button" onClick={() => {  navigate('/'); }}> Home </button>
+        <button type="button" onClick={() => { navigate('/login'); }}> Log in </button>
+        <button type="button" onClick={() => {  navigate('/register'); }}> Register </button>
         {/* <button type="button" onClick={logCookies}> Log Cookies </button> */}
         </Space>
 
