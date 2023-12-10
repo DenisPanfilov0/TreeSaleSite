@@ -1,16 +1,16 @@
-// src/components/Catalog/CatalogCard.tsx
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Row, Col, Input } from 'antd';
+import { Card, Button, Row, Col, Typography } from 'antd';
 import { useUnit } from 'effector-react';
 import { $user } from '../../Store/Store';
 import { useNavigate } from 'react-router-dom';
 
-const { Meta } = Card;
+const { Text } = Typography;
 
 interface Product {
   id: number;
   name: string;
-  cost: number;
+  costLogs: number;
+  costChoppedWood?: number;
   image: string;
 }
 
@@ -20,13 +20,13 @@ interface CatalogCardProps {
 
 const CatalogCard: React.FC<CatalogCardProps> = ({ product }) => {
   const [quantity, setQuantity] = useState<number>(1);
-  const [totalCost, setTotalCost] = useState<number>(product.cost);
+  // const [totalCost, setTotalCost] = useState<number>(product.cost);
   const user = useUnit($user);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setTotalCost(quantity * product.cost);
-  }, [quantity, product.cost]);
+  // useEffect(() => {
+  //   setTotalCost(quantity * product.cost);
+  // }, [quantity, product.cost]);
 
   const handleQuantityChange = (value: number) => {
     setQuantity(value);
@@ -45,33 +45,25 @@ const CatalogCard: React.FC<CatalogCardProps> = ({ product }) => {
   return (
     <Card
       hoverable
-      style={{ width: 240 }}
+      style={{ width: 240, textAlign: 'center' }}
       cover={<img alt={product.name} src={product.image} />}
     >
-      <Meta
-        title={product.name}
-        description={
-          <Row gutter={[8, 8]} justify="space-between">
-            <Col span={12}>Unit Cost: {product.cost}$</Col>
-            <Col span={12} style={{ textAlign: 'right' }}>Total Cost: {totalCost}$</Col>
-          </Row>
-        }
-      />
-      <Row style={{ marginTop: '16px' }} gutter={[8, 8]}>
-        <Col span={12}>
-          <Input
-            type="number"
-            min={1}
-            value={quantity}
-            onChange={(e) => handleQuantityChange(parseInt(e.target.value, 10))}
-          />
-        </Col>
-        <Col span={12}>
-          <Button type="primary" block onClick={handleOrderButtonClick}>
-            Order
-          </Button>
-        </Col>
+      <Text strong>{product.name}</Text>
+      <Row gutter={[8, 8]} style={{ marginTop: '16px' }}>
+      {product.costLogs && (
+          <Col span={12}>
+            <Text strong>В чурках: {product.costLogs}$</Text>
+          </Col>
+        )}
+        {product.costChoppedWood && (
+          <Col span={12}>
+            <Text strong>Колотые: {product.costChoppedWood}$</Text>
+          </Col>
+        )}
       </Row>
+      <Button type="primary" block style={{ marginTop: '16px' }} onClick={handleOrderButtonClick}>
+        Order
+      </Button>
     </Card>
   );
 };
