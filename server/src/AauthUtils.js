@@ -7,12 +7,13 @@ const authenticateUser = async (login, password) => {
     const existingUser = await User.findOne({ email: login });
 
 
+
     if (existingUser) {
       const isPasswordValid = await bcrypt.compare(password, existingUser.password);
 
       if (isPasswordValid) {
-        const token = existingUser.generateAuthToken();
-        return { success: true, token, user: existingUser };
+        // const token = existingUser.generateAuthToken();
+        return { success: true, user: existingUser };
       } else {
         return { success: false, error: 'Неверный пароль' };
       }

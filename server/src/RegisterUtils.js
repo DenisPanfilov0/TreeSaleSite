@@ -1,10 +1,11 @@
 const User = require('./UserModel.js');
 
-async function saveUser({ username, email, password }) {
+async function saveUser({ username, email, password, phone }) {
   const newUser = new User({
     username,
     email,
     password,
+    phone,
     isAdmin: false,
   });
 

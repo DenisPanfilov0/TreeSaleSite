@@ -90,6 +90,7 @@ app.post('/api/login', async (req, res) => {
     const user = await authenticateUser(login, password);
 
     if (user) {
+
       const accessToken = jwt.sign({ _id: user._id }, 'your-secret-key', { expiresIn: '1m' });
       const refreshToken = jwt.sign({ _id: user._id }, 'refresh-secret-key', { expiresIn: '7d' });
 
@@ -115,6 +116,7 @@ app.post('/api/login', async (req, res) => {
         });
 
       res.json({ success: true, userDate: { _id: user.user._id, username: user.user.username, email: user.user.email, isAdmin: user.user.isAdmin } });
+
     } else {
       res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
@@ -156,8 +158,8 @@ app.post('/api/check-tokens', (req, res) => {
 });
 
 app.post('/api/register', (req, res) => {
-  const { username, email, password } = req.body;
-  register.saveUser({ username, email, password })
+  const { username, email, password, phone } = req.body;
+  register.saveUser({ username, email, password, phone })
   res.status(200).json({ message: 'Вы зарегистрированы' })
 })
 

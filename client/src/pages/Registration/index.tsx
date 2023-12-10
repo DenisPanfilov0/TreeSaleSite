@@ -1,5 +1,6 @@
 import { Button, Checkbox, Col, Form, Input, Row, } from 'antd';
 import { useUnit } from 'effector-react';
+import { useNavigate } from 'react-router-dom';
 
 import { $isLoading, createUser } from './store'
 import { IUser } from './types'
@@ -30,9 +31,10 @@ const tailFormItemLayout = {
 
 const Registration = () => {
   const [form] = Form.useForm();
-  const isLoading = useUnit($isLoading)
+  const isLoading = useUnit($isLoading);
+  const navigate = useNavigate();
 
-  const onFinish = async (values: IUser) => createUser(values)
+  const onFinish = async (values: IUser) => createUser(values); navigate('/login');
 
   return (
     <Row justify="center" align="middle" style={{ minHeight: '100vh' }}>

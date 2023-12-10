@@ -1,6 +1,7 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useUnit } from 'effector-react';
 import { Button, Form, Input, Row, Col } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import { logIn, $isLoading } from './store'
 
@@ -11,8 +12,9 @@ interface FormValues {
 
 const LogIn = () => {
   const isLoading = useUnit($isLoading)
+  const navigate = useNavigate();
 
-  const onFinish = (values: FormValues) => logIn(values);
+  const onFinish = (values: FormValues) => logIn(values); navigate('/catalog');
 
   return (
     <Row justify="center" align="middle" style={{ minHeight: '100vh' }}>
@@ -25,9 +27,9 @@ const LogIn = () => {
         >
           <Form.Item
             name="login"
-            rules={[{ required: true, message: 'Please input your Username!' }]}
+            rules={[{ required: true, message: 'Please input your Email!' }]}
           >
-            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
           </Form.Item>
 
           <Form.Item
