@@ -2,13 +2,13 @@ export interface IOrder {
     firstName: string;
     lastName: string;
     middleName: string;
-    address: string;
+    deliveryAddress: string;
     phoneNumber: string;
     deliveryDate: string;
-    product: string;
-    quantity: number;
+    productName: string;
+    amount: number;
     additionalService: string;
     comment: string;
     paymentMethod: string;
-    totalPrice: number;
+    finalPrice: number;
   }

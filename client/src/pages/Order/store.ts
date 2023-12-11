@@ -4,9 +4,9 @@ import { IOrder, } from './types';
 import { baseUrl } from '../../constants';
 
 const sendOrderFx = createEffect(
-    (/*data: IOrder*/) => {
-        console.log('Попытка была:'/*, data*/);
-        // return data; // возвращаем данные без изменений, чтобы передать их дальше
+    (data: IOrder) => {
+        console.log('Data', data);
+        return data; // возвращаем данные без изменений, чтобы передать их дальше
       },
 //   (data: IOrder) => axios.post(`${baseUrl}/order`, data),
 );

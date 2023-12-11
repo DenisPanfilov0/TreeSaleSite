@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -12,8 +12,6 @@ import {
 
 import { useUnit } from 'effector-react';
 import {
-  // orderFormChanged,
-  // submitOrder,
   $isLoading,
   createOrder,
 } from './store';
@@ -44,7 +42,16 @@ const Order: React.FC = () => {
     setTotalCostWithService((value === 'logs' ? product?.costLogs || 0 : product?.costChoppedWood || 0));
   };
 
-  const onFinish = async (values: IOrder) => console.log('была нажата кнопка');
+
+  const [finalPrice, setFinalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    setFinalPrice(quality * totalCostWithService);
+  }, [quality, totalCostWithService]);
+
+ 
+  const onFinish = async (values: IOrder) => createOrder({...values, finalPrice});
+
 
 
   const handlePlaceOrder = () => {
@@ -67,35 +74,36 @@ const Order: React.FC = () => {
         layout="horizontal"
         style={{ maxWidth: 600 }}
         onFinish={onFinish}
+        initialValues={{ productName: product.name }}
       >
 
 
-        <Form.Item label="Имя">
+        <Form.Item label="Имя" name="firstName">
           <Input />
         </Form.Item>
 
-        <Form.Item label="Фамилия">
+        <Form.Item label="Фамилия" name="lastName">
           <Input />
         </Form.Item>
 
-        <Form.Item label="Отчество">
+        <Form.Item label="Отчество" name="middleName">
           <Input />
         </Form.Item>
 
-        <Form.Item label="Адрес доставки">
+        <Form.Item label="Адрес доставки" name="deliveryAddress">
           <Input />
         </Form.Item>
 
-        <Form.Item label="Номер Телефона">
+        <Form.Item label="Номер Телефона" name="phoneNumber">
           <Input />
         </Form.Item>
 
-        <Form.Item label="Дата Доставки">
+        <Form.Item label="Дата Доставки" name="deliveryDate">
           <DatePicker />
         </Form.Item>
 
-        <Form.Item label="Товар">
-          <Input value={product.name} readOnly />
+        <Form.Item label="Товар" name="productName">
+          <Input readOnly />
         </Form.Item>
 
         <Form.Item
@@ -113,7 +121,7 @@ const Order: React.FC = () => {
           />
         </Form.Item>
 
-        <Form.Item label="Доп. услуги">
+        <Form.Item label="Доп. услуги" name="additionalService">
           <Radio.Group onChange={(e) => handleServiceChange(e.target.value)} value={selectedService}>
             {product?.costLogs && (
             <Radio value="logs"> В чурках ({product.costLogs}$) </Radio>
@@ -124,25 +132,25 @@ const Order: React.FC = () => {
           </Radio.Group>
         </Form.Item>
 
-        <Form.Item label="Коментарий">
+        <Form.Item label="Коментарий" name="comment">
           <TextArea rows={4} />
         </Form.Item>
 
-        <Form.Item label="Способ оплаты">
+        <Form.Item label="Способ оплаты" name="paymentMethod">
           <Radio.Group>
             <Radio value="cash"> Наличными </Radio>
             <Radio value="non-cash" disabled={true}> Безналичный </Radio>
           </Radio.Group>
         </Form.Item>
 
-        <Form.Item label="Конечная цена" name="totalPrice">
+        <Form.Item label="Конечная цена" name="finalPrice">
           <Typography.Text style={{ fontSize: '16px', lineHeight: '32px', fontWeight: 'bold' }}>
-            {quality * totalCostWithService} рублей
+            {finalPrice} рублей
           </Typography.Text>
         </Form.Item>
 
         <Form.Item label=" " colon={false}>
-            <Button type="primary" /*onClick={() => onFinish(values)}*/loading={isLoading}>Оформить заказ</Button>
+            <Button type="primary" /*onClick={() => onFinish(values)}*/htmlType="submit" loading={isLoading}>Оформить заказ</Button>
         </Form.Item>
       </Form>
     </>
