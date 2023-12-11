@@ -8,6 +8,7 @@ const { authenticateUser } = require('./src/AauthUtils.js');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const register = require('./src/RegisterUtils.js')
+const Order = require('./src/OrderModel.js');
 
 mongoose.connect('mongodb+srv://Alexander:1q2w3e4r@cluster0.jwcpdzh.mongodb.net/all_users', {
   // useUnifiedTopology: true,
@@ -18,60 +19,6 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Ошибка подключения к MongoDB:'));
 db.once('open', async () => {
-  console.log('Успешное подключение к MongoDB');
-
-  // const newUser = new User({
-  //   id: '2',
-  //   username: 'Lala',
-  //   email: 'lala@gmail.com',
-  //   password: 'Lala123',
-  // });
-
-  // try {
-    
-    
-  //   await newUser.save();
-  //   console.log('Пользователь успешно добавлен в коллекцию');
-  // } catch (error) {
-  //   console.error('Ошибка при сохранении пользователя:', error);
-  // }
-
-  const login = 'lala@gmail.com';
-  const password = 'Lala123';
-
-  // const existingUser = await Users.findOne({ email: login });
-  // // console.log(existingUser);
-  // if (existingUser) {
-  //   const isPasswordValid = await bcrypt.compare(password, existingUser.password);
-
-  //   if (isPasswordValid) {
-  //     const token = existingUser.generateAuthToken();
-  //     console.log('Авторизация успешна. Токен:', token);
-  //   } else {
-  //     console.error('Ошибка при авторизации. Неверный пароль');
-  //   }
-  // } else {
-  //   console.error('Ошибка при авторизации. Пользователь не найден');
-  // }
-
-//   const loginToFind = 'petr@gmail.com';
-// const userWithEmail = await User.findOne({ email: loginToFind }, {password: 1});
-// if (userWithEmail.password == password) {
-//   console.log('всё получилось')
-// }
-// console.log(userWithEmail);
-
-
-// const users = await User.find({ email: 'exampleUser' }, { name: 1, email: 1 });
-// console.log(users);
-
-// console.log(await User.find({name: 1}, { email: loginToFind }));
-
-// if (userWithEmail) {
-//   console.log('Найден пользователь с email', loginToFind, 'и _id', userWithEmail._id);
-// } else {
-//   console.log('Пользователь с email', loginToFind, 'не найден');
-// }
 });
 
 app.use((req, res, next) => {
@@ -163,10 +110,31 @@ app.post('/api/register', (req, res) => {
   res.status(200).json({ message: 'Вы зарегистрированы' })
 })
 
-app.post('/api/order', (req, res) => {
-  // const { username, email, password, phone } = req.body;
-  console.log('попробовали создать форму')
+app.post('/api/order', async (req, res) => {  
+  try {
+    const newOrder = new Order(req.body);
+    await newOrder.save();
+    console.log('Заказ успешно сохранен');
+    res.status(200).json({ success: true, message: 'Order saved successfully' });
+  } catch (error) {
+    console.error('Ошибка при сохранении заказа:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
 })
+
+app.get('/api/orders/:userId', async (req, res) => {
+  console.log(req.body)
+
+  const userId = req.params.userId;
+
+  try {
+    const orders = await Order.find({ user_id: userId });
+    res.json({ success: true, orders });
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
 
 app.get('/', (req, res) => {
   res.send('Привет, мир!');

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useStore } from 'effector-react';
+import { $user, setUser, resetUser } from '../../Store/Store';
 import {
   Button,
   DatePicker,
@@ -21,13 +23,13 @@ import { IOrder } from './types';
 const { TextArea } = Input;
 
 const Order: React.FC = () => {
+  const user = useStore($user)!;
 
   const navigate = useNavigate();
 
 
   const location = useLocation();
   const { product } = location.state || {};
-  // const orderForm = useUnit($orderForm);
   const isLoading = useUnit($isLoading);
   
   const [selectedService, setSelectedService] = useState<string>('logs');
@@ -44,13 +46,14 @@ const Order: React.FC = () => {
 
 
   const [finalPrice, setFinalPrice] = useState<number>(0);
+  
 
   useEffect(() => {
     setFinalPrice(quality * totalCostWithService);
   }, [quality, totalCostWithService]);
 
  
-  const onFinish = async (values: IOrder) => createOrder({...values, finalPrice});
+  const onFinish = async (values: IOrder) => createOrder({...values, finalPrice, user_id: user?._id});
 
 
 
@@ -99,7 +102,10 @@ const Order: React.FC = () => {
         </Form.Item>
 
         <Form.Item label="Дата Доставки" name="deliveryDate">
-          <DatePicker />
+          <DatePicker
+            showTime={false} 
+            format="YYYY-MM-DD"
+          />
         </Form.Item>
 
         <Form.Item label="Товар" name="productName">

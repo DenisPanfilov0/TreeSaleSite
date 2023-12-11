@@ -28,13 +28,13 @@ userSchema.pre('save', async function (next) {
     }
   });
 
-// Метод для генерации JWT
-userSchema.methods.generateAuthToken = function () {
-  const user = this;
-  const token = jwt.sign({ _id: user._id }, 'your-secret-key'); // Замените на свой секретный ключ
+// // Метод для генерации JWT
+// userSchema.methods.generateAuthToken = function () {
+//   const user = this;
+//   const token = jwt.sign({ _id: user._id }, 'your-secret-key'); // Замените на свой секретный ключ
 
-  return token;
-};
+//   return token;
+// };
 
 const User = mongoose.model('User', userSchema);
 
