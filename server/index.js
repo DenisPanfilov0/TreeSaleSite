@@ -163,6 +163,11 @@ app.post('/api/register', (req, res) => {
   res.status(200).json({ message: 'Вы зарегистрированы' })
 })
 
+app.post('/api/order', (req, res) => {
+  // const { username, email, password, phone } = req.body;
+  console.log('попробовали создать форму')
+})
+
 app.get('/', (req, res) => {
   res.send('Привет, мир!');
 });

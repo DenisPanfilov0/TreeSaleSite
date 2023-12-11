@@ -35,7 +35,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({ product }) => {
   const handleOrderButtonClick = () => {
     if (user) {
       // Если есть данные в хранилище, перенаправляем на страницу "/order"
-      navigate('/order');
+      navigate('/order', { state: { product } });
     } else {
       // Если нет данных в хранилище, перенаправляем на страницу регистрации
       navigate('/register');
