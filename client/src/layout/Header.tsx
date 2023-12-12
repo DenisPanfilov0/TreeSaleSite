@@ -1,10 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Layout, Space, Button } from 'antd';
 import { useUnit } from 'effector-react';
-import { $user } from '../Store/Store';
+import { $user, resetUser } from '../Store/Store';
 
 const Header = () => {
+  const navigate = useNavigate();
+
   const user = useUnit($user);
+  const handleLogout = () => {
+    resetUser();
+    navigate('/login');
+  };
 
   return (
     <Layout.Header
@@ -19,10 +25,12 @@ const Header = () => {
       }}
     >
         <Space>
+          {user?.isAdmin && <Link to='/admin'><Button type='primary'>Админ</Button></Link>}
           <Link to='/'><Button type='primary'>Home</Button></Link>
-          <Link to='/catalog'><Button type='primary'>Catalog</Button></Link>
-          {!user && <><Link to='/login'><Button type='primary'>Log in</Button></Link><Link to='/register'><Button type='primary'>Register</Button></Link></>}
-          {user && <Link to='/profile'><Button type='primary'>Profile</Button></Link>}
+          <Link to='/catalog'><Button type='primary'>Каталог</Button></Link>
+          {!user && <><Link to='/login'><Button type='primary'>Войти</Button></Link><Link to='/register'><Button type='primary'>Регистрация</Button></Link></>}
+          {user && <Link to='/profile'><Button type='primary'>Профиль</Button></Link>}
+          {user && <Button type='primary' onClick={handleLogout}>Выход</Button>}
         </Space>
     </Layout.Header>
   );

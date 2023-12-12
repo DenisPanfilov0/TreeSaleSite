@@ -136,6 +136,30 @@ app.get('/api/orders/:userId', async (req, res) => {
   }
 });
 
+app.get('/api/all_orders', async (req, res) => {
+  try {
+    const orders = await Order.find();
+    res.json({ success: true, orders });
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+app.post('/api/update_order_status/:orderId', async (req, res) => {
+  console.log('попытка изменить статус');
+  const orderId = req.params.orderId;
+  const { orderStatus } = req.body;
+
+  try {
+    await Order.findByIdAndUpdate(orderId, { orderStatus });
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error updating order status:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
 app.get('/', (req, res) => {
   res.send('Привет, мир!');
 });

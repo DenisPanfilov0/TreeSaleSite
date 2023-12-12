@@ -44,16 +44,35 @@ const Order: React.FC = () => {
     setTotalCostWithService((value === 'logs' ? product?.costLogs || 0 : product?.costChoppedWood || 0));
   };
 
+  const [deliveryCost, setDeliveryCost] = useState<number>(0);
+
+  const handleDeliveryChange = (value: string) => {
+    switch (value) {
+      case '30':
+        setDeliveryCost(40);
+        break;
+      case '60':
+        setDeliveryCost(60);
+        break;
+      case '100':
+        setDeliveryCost(80);
+        break;
+      default:
+        setDeliveryCost(0);
+        break;
+    }
+  };
+
 
   const [finalPrice, setFinalPrice] = useState<number>(0);
   
 
   useEffect(() => {
-    setFinalPrice(quality * totalCostWithService);
-  }, [quality, totalCostWithService]);
+    setFinalPrice(quality * totalCostWithService + deliveryCost);
+  }, [quality, totalCostWithService, deliveryCost]);
 
  
-  const onFinish = async (values: IOrder) => createOrder({...values, finalPrice, user_id: user?._id});
+  const onFinish = async (values: IOrder) => { createOrder({...values, finalPrice, user_id: user?._id}); navigate('/catalog')}
 
 
 
@@ -72,7 +91,7 @@ const Order: React.FC = () => {
     <>
       <Form
         form={form}
-        labelCol={{ span: 5 }}
+        labelCol={{ span: 6 }}
         wrapperCol={{ span: 20 }}
         layout="horizontal"
         style={{ maxWidth: 600 }}
@@ -135,6 +154,14 @@ const Order: React.FC = () => {
             {product?.costChoppedWood && (
             <Radio value="firewood"> Колотые ({product.costChoppedWood}$) </Radio>
             )}
+          </Radio.Group>
+        </Form.Item>
+
+        <Form.Item label="Стоимость доставки" name="deliveryCost">
+          <Radio.Group onChange={(e) => handleDeliveryChange(e.target.value)}>
+            <Radio value="30"> до 30км + 40р </Radio>
+            <Radio value="60"> до 60км + 60р  </Radio>
+            <Radio value="100"> до 100км + 80р </Radio>
           </Radio.Group>
         </Form.Item>
 

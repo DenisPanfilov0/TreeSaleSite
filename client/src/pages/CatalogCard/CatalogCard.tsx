@@ -9,7 +9,7 @@ const { Text } = Typography;
 interface Product {
   id: number;
   name: string;
-  costLogs: number;
+  costLogs?: number;
   costChoppedWood?: number;
   image: string;
 }

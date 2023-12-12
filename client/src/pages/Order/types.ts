@@ -1,4 +1,5 @@
 export interface IOrder {
+    _id: string;
     user_id: string,
     firstName: string;
     lastName: string;
@@ -13,4 +14,5 @@ export interface IOrder {
     paymentMethod: string;
     finalPrice: number;
     orderStatus: string;
+    deliveryCost: number;
   }

@@ -1,34 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { useUnit } from 'effector-react';
 import axios from 'axios';
-import { Table } from 'antd';
+import { Table, Select } from 'antd';
 import { IOrder } from '../Order/types';
-import { $user } from '../../Store/Store';
 
-const UserProfile: React.FC = () => {
-  const user = useUnit($user);
+const { Option } = Select;
+
+
+const AdminPanel: React.FC = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
+  const [orderStatus, setOrderStatus] = useState<string | null>(null);
+
+  const handleStatusChange = async (value: string, orderId: string) => {
+    try {
+        console.log('попытка изменить статус');
+      const response = await axios.post(`http://localhost:3000/api/update_order_status/${orderId}`, {
+        orderStatus: value,
+      });
+      const updatedOrders = orders.map((order) =>
+        order._id === orderId ? { ...order, orderStatus: value } : order
+      );
+      setOrders(updatedOrders);
+    } catch (error) {
+      console.error('Error updating order status:', error);
+    }
+  };
+  
 
   useEffect(() => {
-    const fetchUserOrders = async () => {
+    const fetchAllOrders = async () => {
       try {
-        if (user?._id) {
-          const response = await axios.get(`http://localhost:3000/api/orders/${user._id}`);
-          const data = response.data;
-    
-          if (data.success) {
-            setOrders(data.orders);
-          } else {
-            console.error('Error fetching user orders:', data.error);
-          }
+        const response = await axios.get('http://localhost:3000/api/all_orders');
+        const data = response.data;
+
+        if (data.success) {
+          setOrders(data.orders);
+        } else {
+          console.error('Error fetching all orders:', data.error);
         }
       } catch (error) {
-        console.error('Error fetching user orders:', error);
+        console.error('Error fetching all orders:', error);
       }
     };
 
-    fetchUserOrders();
-  }, [user]);
+    fetchAllOrders();
+  }, []);
 
   const columns = [
     {
@@ -105,33 +120,37 @@ const UserProfile: React.FC = () => {
       key: 'comment',
     },
     {
-      title: 'Статус',
-      dataIndex: 'orderStatus',
-      key: 'orderStatus',
-    },
+        title: 'Статус',
+        dataIndex: 'orderStatus',
+        key: 'orderStatus',
+        render: (text: any, record: IOrder) => (
+          <Select
+            defaultValue={record.orderStatus}
+            style={{ width: 3000 }}
+            dropdownStyle={{ minWidth: 120, width: 'auto' }}
+            onChange={(value) => handleStatusChange(value, record._id)}
+          >
+            <Option value="Заказ оформлен и оплачен. Ожидается доставка">Заказ оформлен и оплачен. Ожидается доставка</Option>
+            <Option value="Заказ оформлен. Ожидается доставка. Оплата наличными водителю">Заказ оформлен. Ожидается доставка. Оплата наличными водителю</Option>
+            <Option value="Заказ отменен">Заказ отменен</Option>
+            <Option value="Заказ на редактировании">Заказ на редактировании</Option>
+            <Option value="Заказ доставлен">Заказ доставлен</Option>
+          </Select>
+        ),
+      },
   ];
 
   return (
     <div>
-      <h2>Профиль пользователя</h2>
-      {user ? (
-        <>
-          <p>ID: {user._id}</p>
-          <p>Имя пользователя: {user.username}</p>
-          <p>Email: {user.email}</p>
-          <p>Админ: {user.isAdmin ? 'Да' : 'Нет'}</p>
-          <h3>Заказы пользователя:</h3>
-          {orders.length > 0 ? (
-            <Table dataSource={orders} columns={columns} bordered />
-          ) : (
-            <p>У пользователя нет заказов</p>
-          )}
-        </>
+      <h2>Админ-панель</h2>
+      <h3>Все заказы:</h3>
+      {orders.length > 0 ? (
+        <Table dataSource={orders} columns={columns} bordered />
       ) : (
-        <p>Пользователь не вошел в систему</p>
+        <p>Нет доступных заказов</p>
       )}
     </div>
   );
 };
 
-export default UserProfile;
+export default AdminPanel;

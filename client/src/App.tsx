@@ -7,6 +7,7 @@ import Registration from './pages/Registration';
 import CatalogCard from './pages/CatalogCard/index';
 import Profile from './pages/Profile/Profile'
 import Order from './pages/Order/Order';
+import Admin from './pages/Admin/Admin';
 import { $user } from './Store/Store';
 import { useUnit } from 'effector-react';
 
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/catalog" element={<CatalogCard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/order" element={<Order />} />
+            {user?.isAdmin && <Route path="/admin" element={<Admin />} />}
           </Routes>
         </Layout.Content>
       </Layout.Content>
