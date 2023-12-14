@@ -15,4 +15,5 @@ export interface IOrder {
     finalPrice: number;
     orderStatus: string;
     deliveryCost: number;
+    product_id: number;
   }

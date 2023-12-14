@@ -122,14 +122,67 @@ app.post('/api/order', async (req, res) => {
   }
 })
 
+
+app.put('/api/updateOrder/:orderId', async (req, res) => {
+  console.log("была попытка")
+  const { orderId } = req.params;
+  const updatedOrderData = req.body;
+
+  // try {
+  //   const updatedOrder = await Order.findByIdAndUpdate(orderId, updatedOrderData, { new: true });
+    
+  //   if (!updatedOrder) {
+  //     return res.status(404).json({ success: false, error: 'Order not found' });
+  //   }
+
+  //   console.log('Заказ успешно обновлен');
+  //   res.status(200).json({ success: true, message: 'Order updated successfully', updatedOrder });
+  // } catch (error) {
+  //   console.error('Ошибка при обновлении заказа:', error);
+  //   res.status(500).json({ success: false, error: 'Internal Server Error' });
+  // }
+});
+
+
+app.post('/api/order/:orderId', async (req, res) => {
+  console.log('хммм')
+  const { orderId } = req.params;
+  const updatedOrderData = req.body;
+
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(orderId, updatedOrderData, { new: true });
+    
+    if (!updatedOrder) {
+      return res.status(404).json({ success: false, error: 'Order not found' });
+    }
+
+    console.log('Заказ успешно обновлен');
+    res.status(200).json({ success: true, message: 'Order updated successfully', updatedOrder });
+  } catch (error) {
+    console.error('Ошибка при обновлении заказа:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
 app.get('/api/orders/:userId', async (req, res) => {
-  console.log(req.body)
 
   const userId = req.params.userId;
 
   try {
     const orders = await Order.find({ user_id: userId });
     res.json({ success: true, orders });
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/editOrders/:orderId', async (req, res) => {
+  const orderId = req.params.orderId;
+
+  try {
+    const order = await Order.findOne({ _id: orderId });
+    res.json({ success: true, order });
   } catch (error) {
     console.error('Error fetching orders:', error);
     res.status(500).json({ success: false, error: 'Internal Server Error' });
@@ -147,7 +200,6 @@ app.get('/api/all_orders', async (req, res) => {
 });
 
 app.post('/api/update_order_status/:orderId', async (req, res) => {
-  console.log('попытка изменить статус');
   const orderId = req.params.orderId;
   const { orderStatus } = req.body;
 

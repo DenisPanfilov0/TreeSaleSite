@@ -10,9 +10,23 @@ const sendOrderFx = createEffect(
 export const createOrder = createEvent<IOrder>({
 });
 
+
 sample({
   clock: createOrder,
   target: sendOrderFx,
+});
+
+
+const updateOrderFx = createEffect(
+  ({ orderId, updatedData }: { orderId: string, updatedData: IOrder }) =>
+    axios.post(`${baseUrl}/order/${orderId}`, updatedData),
+);
+
+export const updateOrder = createEvent<{ orderId: string, updatedData: IOrder }>();
+
+sample({
+  clock: updateOrder,
+  target: updateOrderFx,
 });
 
 export const $isLoading = sendOrderFx.pending;

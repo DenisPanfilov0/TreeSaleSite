@@ -16,20 +16,27 @@ import { useUnit } from 'effector-react';
 import {
   $isLoading,
   createOrder,
+  updateOrder
 } from './store';
 
 import { IOrder } from './types';
+import { products } from '../CatalogCard/types';
+import moment from 'moment';
 
 const { TextArea } = Input;
 
-const Order: React.FC = () => {
+const EditOrder: React.FC = () => {
   const user = useStore($user)!;
 
   const navigate = useNavigate();
 
 
   const location = useLocation();
-  const { product } = location.state || {};
+//   const { product } = location.state || {};
+  const { order } = location.state || {};
+  const product = products.find((p) => p.id == order.product_id);
+  console.log('product', product)
+  console.log('order', order)
   const isLoading = useUnit($isLoading);
   
   const [selectedService, setSelectedService] = useState<string>('logs');
@@ -68,12 +75,33 @@ const Order: React.FC = () => {
   
 
   useEffect(() => {
+    handleServiceChange(order.additionalService)
+    handleDeliveryChange(order.deliveryCost);
+  }, [order.deliveryCost]);
+  
+  useEffect(() => {
     setFinalPrice(quality * totalCostWithService + deliveryCost);
   }, [quality, totalCostWithService, deliveryCost]);
 
- 
-  const onFinish = async (values: IOrder) => { createOrder({...values, finalPrice, user_id: user?._id, product_id: product.id}); navigate('/catalog')}
+  useEffect(() => {
+    form.setFieldsValue({
+      deliveryDate: moment(order.deliveryDate, 'YYYY-MM-DD'),
+    });
+  }, [form, order.deliveryDate]);
 
+ 
+//   const onFinish = async (values: IOrder) => { createOrder({...values, finalPrice, }); navigate('/catalog')}
+//   const onFinish = async (values: IOrder) => { updateOrder({ orderId: order._id, updatedData: values });}
+const onFinish = async (values: IOrder) => {
+    updateOrder({
+      orderId: order._id,
+      updatedData: {
+        ...values,
+        finalPrice: finalPrice,
+      }
+    });
+    navigate('/profile');
+  }
 
 
   const handlePlaceOrder = () => {
@@ -96,7 +124,21 @@ const Order: React.FC = () => {
         layout="horizontal"
         style={{ maxWidth: 600 }}
         onFinish={onFinish}
-        initialValues={{ productName: product.name }}
+        initialValues={{ 
+            productName: order.productName,
+            firstName: order.firstName,
+            lastName: order.lastName,
+            middleName: order.middleName,
+            deliveryAddress: order.deliveryAddress,
+            phoneNumber: order.phoneNumber,
+            deliveryCost: order.deliveryCost,
+            amount: order.amount,
+            comment: order.comment,
+            paymentMethod: order.paymentMethod,
+            finalPrice: order.finalPrice,
+            additionalService: order.additionalService,
+            // deliveryDate: order.deliveryDate,
+        }}
       >
 
 
@@ -183,11 +225,11 @@ const Order: React.FC = () => {
         </Form.Item>
 
         <Form.Item label=" " colon={false}>
-            <Button type="primary" /*onClick={() => onFinish(values)}*/htmlType="submit" loading={isLoading}>Оформить заказ</Button>
+            <Button type="primary" /*onClick={() => onFinish(values)}*/htmlType="submit" loading={isLoading}>Сохранить изменения</Button>
         </Form.Item>
       </Form>
     </>
   );
 };
 
-export default Order;
+export default EditOrder;

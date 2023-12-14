@@ -126,7 +126,7 @@ const AdminPanel: React.FC = () => {
         render: (text: any, record: IOrder) => (
           <Select
             defaultValue={record.orderStatus}
-            style={{ width: 3000 }}
+            style={{ width: 300 }}
             dropdownStyle={{ minWidth: 120, width: 'auto' }}
             onChange={(value) => handleStatusChange(value, record._id)}
           >

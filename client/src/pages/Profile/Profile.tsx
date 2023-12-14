@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useUnit } from 'effector-react';
 import axios from 'axios';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { IOrder } from '../Order/types';
 import { $user } from '../../Store/Store';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UserProfile: React.FC = () => {
   const user = useUnit($user);
   const [orders, setOrders] = useState<IOrder[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserOrders = async () => {
@@ -30,7 +32,22 @@ const UserProfile: React.FC = () => {
     fetchUserOrders();
   }, [user]);
 
+  const handleEditOrder = async (orderId: string) => {
+    const response = await axios.get(`http://localhost:3000/api/editOrders/${orderId}`)
+    navigate('/editOrder', { state: { order: response.data.order } });
+    console.log(response.data)
+  };
+
   const columns = [
+    {
+      title: 'Действия',
+      key: 'actions',
+      render: (text: any, record: IOrder) => (
+        <Button type="link" onClick={() => handleEditOrder(record._id)}>
+          Изменить
+        </Button>
+      ),
+    },
     {
       title: 'ФИО',
       dataIndex: 'lastName',

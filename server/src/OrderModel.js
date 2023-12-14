@@ -62,6 +62,10 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: 'в обработке',
   },
+  product_id: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Order = mongoose.model('Order', orderSchema);
