@@ -1,0 +1,82 @@
+.contract-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; 
+}
+
+.contract-content {
+  text-align: center;
+  margin-bottom: 20px; 
+}
+
+.contract-content h1,
+.contract-content p,
+.contract-content button {
+  margin: 0; 
+}
+
+.image-scroll-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  height: 100vh;
+  scrollbar-width: thin; 
+  scrollbar-color: transparent transparent; 
+}
+
+.image-scroll-container::-webkit-scrollbar {
+  width: 12px; 
+}
+
+.image-scroll-container::-webkit-scrollbar-thumb {
+  background-color: transparent; 
+}
+
+@media print {
+  .contract-content {
+    display: none;
+  }
+}
+@media print {
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media print {
+    Header {
+      display: none !important;
+    }
+  }
+
+  .contract-content {
+    display: none;
+  }
+
+  .image-scroll-container {
+    overflow-y: visible;
+  }
+
+  .image-scroll-container img {
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+  }
+}
+
+@media print {
+  .print-mode {
+    display: none;
+  }
+}
+
+
+

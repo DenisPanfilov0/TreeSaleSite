@@ -14,6 +14,7 @@ const Header = () => {
 
   return (
     <Layout.Header
+      className="print-mode"
       style={{
         position: 'sticky',
         top: 0,

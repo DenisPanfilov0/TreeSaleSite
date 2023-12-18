@@ -5,6 +5,13 @@ import { Table, Button } from 'antd';
 import { IOrder } from '../Order/types';
 import { $user } from '../../Store/Store';
 import { Link, useNavigate } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import ContractPage from '../ContractPage';
+
+interface PDFWithAutoTable extends jsPDF {
+  autoTable: (options: any) => void;
+}
 
 const UserProfile: React.FC = () => {
   const user = useUnit($user);
@@ -37,6 +44,36 @@ const UserProfile: React.FC = () => {
     navigate('/editOrder', { state: { order: response.data.order } });
     console.log(response.data)
   };
+
+
+
+
+
+  // const generatePDF = () => {
+  //   // const doc = new jsPDF();
+  //   const doc = new jsPDF({
+  //     unit: 'mm',
+  //     orientation: 'portrait',
+  //     format: 'a4',
+  //     floatPrecision: 16,
+  //   }) as PDFWithAutoTable;
+    
+  //   const tableData = orders.map(order => Object.values(order));
+
+  //   doc.autoTable({
+  //     head: [['ID', 'Имя пользователя', 'Email', 'Админ', /* другие заголовки */]],
+  //     body: [
+  //       [user?._id, user?.username, user?.email, user?.isAdmin ? 'Yes' : 'No' /* другие данные */],
+  //     ],
+  //   });
+
+  //   doc.autoTable({
+  //     head: [['Действия', 'ФИО', 'Номер Телефона', 'Адрес доставки', 'Дата доставки', /* другие заголовки */]],
+  //     body: tableData,
+  //   });
+
+  //   doc.save('user_profile.pdf');
+  // };
 
   const columns = [
     {
@@ -139,7 +176,11 @@ const UserProfile: React.FC = () => {
           <p>Админ: {user.isAdmin ? 'Да' : 'Нет'}</p>
           <h3>Заказы пользователя:</h3>
           {orders.length > 0 ? (
+            <>
+            {/* <Button onClick={*****}>Создать PDF</Button> */}
+            <Link to='/ContractPage'><Button type='primary'>Contract Page</Button></Link>
             <Table dataSource={orders} columns={columns} bordered />
+          </>
           ) : (
             <p>У пользователя нет заказов</p>
           )}

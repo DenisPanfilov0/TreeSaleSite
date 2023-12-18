@@ -9,6 +9,7 @@ import Profile from './pages/Profile/Profile'
 import Order from './pages/Order/Order';
 import EditOrder from './pages/Order/EditOrder';
 import Admin from './pages/Admin/Admin';
+import ContractPage from './pages/ContractPage';
 import { $user } from './Store/Store';
 import { useUnit } from 'effector-react';
 
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/order" element={<Order />} />
             <Route path="/editOrder" element={<EditOrder />} />
+            <Route path="/ContractPage" element={<ContractPage user={undefined} order={undefined} />} />
             {user?.isAdmin && <Route path="/admin" element={<Admin />} />}
           </Routes>
         </Layout.Content>

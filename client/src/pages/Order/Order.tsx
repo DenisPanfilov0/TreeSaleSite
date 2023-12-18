@@ -10,9 +10,11 @@ import {
   InputNumber,
   Radio,
   Typography,
+  Modal,
 } from 'antd';
 
 import { useUnit } from 'effector-react';
+import InputMask from 'react-input-mask';
 import {
   $isLoading,
   createOrder,
@@ -71,10 +73,41 @@ const Order: React.FC = () => {
     setFinalPrice(quality * totalCostWithService + deliveryCost);
   }, [quality, totalCostWithService, deliveryCost]);
 
+  const [isPaymentVisible, setIsPaymentVisible] = useState(false);
+
  
   const onFinish = async (values: IOrder) => { createOrder({...values, finalPrice, user_id: user?._id, product_id: product.id}); navigate('/catalog')}
 
 
+  const [cardNumber, setCardNumber] = useState<string>('');
+  const [expiryDate, setExpiryDate] = useState<string>('');
+  const [cvv, setCvv] = useState<string>('');
+
+  const formatCardNumber = (input: string) => {
+    const formattedInput = input.replace(/\D/g, '').slice(0, 16);
+    let result = '';
+
+    for (let i = 0; i < formattedInput.length; i += 4) {
+      result += formattedInput.slice(i, i + 4) + ' ';
+    }
+
+    setCardNumber(result.trim());
+  };
+
+  const formatExpiryDate = (input: string) => {
+    const formattedInput = input.replace(/\D/g, '').slice(0, 4);
+
+    if (formattedInput.length > 2) {
+      setExpiryDate(`${formattedInput.slice(0, 2)}/${formattedInput.slice(2)}`);
+    } else {
+      setExpiryDate(formattedInput);
+    }
+  };
+
+  const formatCvv = (input: string) => {
+    const formattedInput = input.replace(/\D/g, '').slice(0, 3);
+    setCvv(formattedInput);
+  };
 
   const handlePlaceOrder = () => {
     form
@@ -171,10 +204,38 @@ const Order: React.FC = () => {
 
         <Form.Item label="Способ оплаты" name="paymentMethod">
           <Radio.Group>
-            <Radio value="cash"> Наличными </Radio>
-            <Radio value="non-cash" disabled={true}> Безналичный </Radio>
+            <Radio value="cash" onChange={() => setIsPaymentVisible(false)}> Наличными </Radio>
+            <Radio value="non-cash" onChange={() => setIsPaymentVisible(true)}> Безналичный </Radio>
           </Radio.Group>
         </Form.Item>
+
+        {isPaymentVisible && (
+          <>
+            <Form.Item label="Номер карты">
+        <Input
+          placeholder="Номер карты"
+          value={cardNumber}
+          onChange={(e) => formatCardNumber(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item label="Срок действия">
+        <Input
+          placeholder="Срок действия"
+          value={expiryDate}
+          onChange={(e) => formatExpiryDate(e.target.value)}
+        />
+      </Form.Item>
+
+      <Form.Item label="CVV">
+        <Input
+          placeholder="CVV"
+          value={cvv}
+          onChange={(e) => formatCvv(e.target.value)}
+        />
+      </Form.Item>
+          </>
+        )}
 
         <Form.Item label="Конечная цена" name="finalPrice">
           <Typography.Text style={{ fontSize: '16px', lineHeight: '32px', fontWeight: 'bold' }}>
