@@ -25,7 +25,6 @@ const ContractPage = ({ user, order }) => {
         <p>Детали заказа: {/*order.details*/}</p>
         <button onClick={() => window.print()}>Печать</button>
       </div>
-
       <div className="image-scroll-container">
         <img src="/image/dogovor_po_drovam2_page-0001.jpg" alt="Image 1" />
         <div className="contract_date">{formattedDate}</div>
