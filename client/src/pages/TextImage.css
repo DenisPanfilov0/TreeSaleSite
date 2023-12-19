@@ -1,0 +1,56 @@
+.contract_date,
+.delivery_address {
+  position: absolute;
+  z-index: 1; /* Выберите нужное значение, которое определит порядок наложения */
+}
+
+
+.contract_date {
+    position: relative;
+    /* top: -41.4cm; */
+    /* left: 11.7cm; */
+
+    /* top: -1570px; */
+    /* left: 420px; */
+
+    top: -1174.5pt; 
+    left: 330pt; 
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    text-align: center;
+    font-size: 25pt;
+    width: 100pt;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .delivery_address {
+    position: relative;
+    top: -12cm;
+    left: 420px;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    text-align: center;
+      /* background-color: rgba(0, 0, 0, 0.5); */
+  }
+  
+  .image-overlay p {
+    margin: 0;
+  }
+  
+  @media print {
+    .image-scroll-container img {
+      margin: 0;
+    }
+  
+    .contract_date {
+      font-size: 140pt;
+
+    }
+  }
+  

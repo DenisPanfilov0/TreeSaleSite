@@ -28,7 +28,7 @@
 }
 
 .image-scroll-container::-webkit-scrollbar {
-  width: 12px; 
+  width: 80px; 
 }
 
 .image-scroll-container::-webkit-scrollbar-thumb {
@@ -70,13 +70,13 @@
     height: auto;
     margin: 20px 0;
   }
+  
+  
 }
 
-@media print {
-  .print-mode {
-    display: none;
+  @media print {
+    .print-mode {
+      display: none;
+    }
   }
-}
-
-
-
+  
