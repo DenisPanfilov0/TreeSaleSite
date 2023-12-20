@@ -124,7 +124,7 @@ const Order: React.FC = () => {
     <>
       <Form
         form={form}
-        labelCol={{ span: 6 }}
+        labelCol={{ span: 7 }}
         wrapperCol={{ span: 20 }}
         layout="horizontal"
         style={{ maxWidth: 600 }}
@@ -236,6 +236,14 @@ const Order: React.FC = () => {
       </Form.Item>
           </>
         )}
+
+        <Form.Item label="Серия и номер паспорта" name="passportSeriesNumber">
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Где и кем выдан паспорт" name="passportIssuedBy">
+          <Input />
+        </Form.Item>
 
         <Form.Item label="Конечная цена" name="finalPrice">
           <Typography.Text style={{ fontSize: '16px', lineHeight: '32px', fontWeight: 'bold' }}>

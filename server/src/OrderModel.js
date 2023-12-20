@@ -66,6 +66,14 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  passportSeriesNumber: {
+    type: Number,
+    required: true,
+  },
+  passportIssuedBy: {
+    type: String,
+    required: true,
+  },
 });
 
 const Order = mongoose.model('Order', orderSchema);

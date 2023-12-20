@@ -16,4 +16,6 @@ export interface IOrder {
     orderStatus: string;
     deliveryCost: number;
     product_id: number;
+    passportSeriesNumber: number;
+    passportIssuedBy: string;
   }

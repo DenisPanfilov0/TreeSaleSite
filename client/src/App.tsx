@@ -31,7 +31,7 @@ const App = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/order" element={<Order />} />
             <Route path="/editOrder" element={<EditOrder />} />
-            <Route path="/ContractPage" element={<ContractPage user={undefined} order={undefined} />} />
+            <Route path="/ContractPage" element={<ContractPage />} />
             {user?.isAdmin && <Route path="/admin" element={<Admin />} />}
           </Routes>
         </Layout.Content>

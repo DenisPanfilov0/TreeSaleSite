@@ -119,7 +119,7 @@ const onFinish = async (values: IOrder) => {
     <>
       <Form
         form={form}
-        labelCol={{ span: 6 }}
+        labelCol={{ span: 7 }}
         wrapperCol={{ span: 20 }}
         layout="horizontal"
         style={{ maxWidth: 600 }}
@@ -137,6 +137,8 @@ const onFinish = async (values: IOrder) => {
             paymentMethod: order.paymentMethod,
             finalPrice: order.finalPrice,
             additionalService: order.additionalService,
+            passportSeriesNumber: order.passportSeriesNumber,
+            passportIssuedBy: order.passportIssuedBy,
             // deliveryDate: order.deliveryDate,
         }}
       >
@@ -216,6 +218,14 @@ const onFinish = async (values: IOrder) => {
             <Radio value="cash"> Наличными </Radio>
             <Radio value="non-cash" disabled={true}> Безналичный </Radio>
           </Radio.Group>
+        </Form.Item>
+
+        <Form.Item label="Серия и номер паспорта" name="passportSeriesNumber">
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Где и кем выдан паспорт" name="passportIssuedBy">
+          <Input />
         </Form.Item>
 
         <Form.Item label="Конечная цена" name="finalPrice">

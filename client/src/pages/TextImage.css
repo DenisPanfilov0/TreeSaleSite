@@ -6,12 +6,128 @@
 .contract_date {
   position: absolute;
   border: 5px solid red;
-  right: 50pt; 
-  top: 60pt;
-  font-size: 13pt;
+  /* right: 50pt;  */
+  left: 370pt;
+  top: 64pt;
+  font-size: 9pt;
 }
 
+.name_date {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 316pt;  */
+  left: 65pt;
+  top: 104pt;
+  font-size: 6pt;
+}
 
+.product_name {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 315pt;  */
+  left: 88pt;
+  top: 204pt;
+  font-size: 6pt;
+}
+
+.amount {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 283pt;  */
+  left: 154pt;
+  top: 204pt;
+  font-size: 6pt;
+}
+
+.additional_service {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 200pt; */
+  left: 231pt; 
+  top: 204pt;
+  font-size: 6pt;
+}
+
+.cost {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 147pt;  */
+  left: 280pt;
+  top: 204pt;
+  font-size: 6pt;
+}
+
+.delivery_cost {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 89pt;  */
+  left: 335pt;
+  top: 204pt;
+  font-size: 6pt;
+}
+
+.total_cost {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 31pt;  */
+  left: 393pt;
+  top: 204pt;
+  font-size: 6pt;
+}
+
+.delivery_address {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 302pt;  */
+  left: 65pt;
+  top: 433pt;
+  font-size: 6pt;
+}
+
+.full_name_date {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 316pt;  */
+  left: 250pt;
+  top: 1140pt;
+  font-size: 6pt;
+}
+
+.full_delivery_address {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 316pt;  */
+  left: 268pt;
+  top: 1157pt;
+  font-size: 6pt;
+}
+
+.phone_number {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 316pt;  */
+  left: 270pt;
+  top: 1173pt;
+  font-size: 6pt;
+}
+
+.passport_series_number {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 316pt;  */
+  left: 300pt;
+  top: 1205pt;
+  font-size: 6pt;
+}
+
+.passport_issued_by {
+  position: absolute;
+  border: 5px solid red;
+  /* right: 316pt;  */
+  left: 310pt;
+  top: 1221pt;
+  font-size: 6pt;
+}
 
 
 /* .delivery_address {

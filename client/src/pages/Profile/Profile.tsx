@@ -45,6 +45,11 @@ const UserProfile: React.FC = () => {
     console.log(response.data)
   };
 
+  const consoleWrite = async (orderId: string) => {
+    const response = await axios.get(`http://localhost:3000/api/editOrders/${orderId}`)
+    navigate('/ContractPage', { state: { order: response.data.order } });
+  }
+
 
 
 
@@ -76,6 +81,13 @@ const UserProfile: React.FC = () => {
   // };
 
   const columns = [
+    {
+      title: 'Договор',
+      key: 'actions',
+      render: (text: any, record: IOrder) => (
+          <Button type='primary' onClick={() => consoleWrite(record._id)}>Печать</Button>
+      ),
+    },
     {
       title: 'Действия',
       key: 'actions',
@@ -178,7 +190,6 @@ const UserProfile: React.FC = () => {
           {orders.length > 0 ? (
             <>
             {/* <Button onClick={*****}>Создать PDF</Button> */}
-            <Link to='/ContractPage'><Button type='primary'>Contract Page</Button></Link>
             <Table dataSource={orders} columns={columns} bordered />
           </>
           ) : (
