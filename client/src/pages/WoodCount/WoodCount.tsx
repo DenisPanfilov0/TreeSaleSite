@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Row, Col, Typography } from 'antd';
+import { Card, Button, Typography, Input, Form} from 'antd';
 import { useUnit } from 'effector-react';
 import { $user } from '../../Store/Store';
 import { useNavigate } from 'react-router-dom';
+import { $isLoading, changeWoodCount } from './store'
+import { IWood } from './types';
 import axios from 'axios';
 
 const { Text } = Typography;
+const { Item } = Form;
 
 interface Product {
   id: number;
@@ -20,54 +23,36 @@ interface CatalogCardProps {
   product: Product;
 }
 
-const CatalogCard: React.FC<CatalogCardProps> = ({ product }) => {
+const WoodCount: React.FC<CatalogCardProps> = ({ product }) => {
+
+  const isLoading = useUnit($isLoading);
+  const onFinish = async (values: IWood) => {
+    const data: IWood = { ...values, productName };
+    changeWoodCount(data);
+  };
+
+
   const user = useUnit($user);
   const navigate = useNavigate();
-  const [woodCount, setWoodCount] = useState<number | null>(null);
-  const [availabilityText, setAvailabilityText] = useState<any>(null);
-  const [availabilityColor, setAvailabilityColor] = useState<any>(null);
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
-
+  const [woodCount, setWoodCount] = useState<number>(0);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [newWoodCount, setNewWoodCount] = useState<string>('');
+  const [productName, setProductName] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
+      
         const response = await axios.get(`http://localhost:3000/api/woods?productName=${product.name}`);
         const wood = response.data.wood;
-
-        if (wood && wood.quantity !== undefined) {
-          setWoodCount(wood.quantity);
-
-          // Устанавливаем текст и цвет в зависимости от наличия товара
-          if (wood.quantity > 0) {
-            setAvailabilityText('В наличии');
-            setAvailabilityColor('green');
-            setIsButtonDisabled(false);
-          } else {
-            setAvailabilityText('Нет в наличии');
-            setAvailabilityColor('red');
-            setIsButtonDisabled(true);
-          }
-        } else {
-          // Если товара нет в базе данных или его количество неопределено
-          setAvailabilityText('Нет в наличии');
-          setAvailabilityColor('red');
-          setIsButtonDisabled(true);
-        }
-      } catch (error) {
-        console.error('Error fetching wood count:', error);
-      }
+      
+      setWoodCount(wood.quantity);
     };
 
     fetchData();
   }, [product.name]);
 
-  const handleOrderButtonClick = () => {
-    if (user) {
-      navigate('/order', { state: { product, woodCount } });
-    } else {
-      navigate('/login');
-    }
+  const handleInputChange = (productName: string) => {
+    setProductName(productName);
   };
 
   const defaultDescription = 'Дрова длиной 33-40 сантиметров. Цена указана за насыпной куб. Доставка оплачивается отдельно.';
@@ -104,27 +89,27 @@ const CatalogCard: React.FC<CatalogCardProps> = ({ product }) => {
             <Text>{fullDescription}</Text>
           </div>
         )}
-
-{woodCount !== null && (
         <div style={{ marginTop: '8px' }}>
-          {availabilityText && (
-            <Text style={{ color: availabilityColor }}>{availabilityText}</Text>
-          )}
+          <Text strong>Доступное количество дров: {woodCount}</Text>
         </div>
-      )}
-
-        <Button
-          type="primary"
-          block
-          style={{ marginTop: '16px' }}
-          onClick={handleOrderButtonClick}
-          disabled={isButtonDisabled} // Устанавливаем свойство disabled
-        >
-          Заказать
-        </Button>
+        
+          <Form onFinish={onFinish}>
+            <Item name="quantity" rules={[{ required: true, message: 'Введите количество' }]}>
+              <Input
+                type="number"
+                placeholder="Введите количество"
+                value={newWoodCount}
+                onChange={() => handleInputChange(product.name)}
+                // onChange={(e) => setNewWoodCount(e.target.value)}
+              />
+            </Item>
+            <Button type="primary" block htmlType="submit" loading={isLoading} style={{ marginTop: '16px' }}>
+              Изменить количество
+            </Button>
+          </Form>
       </div>
     </Card>
   );
 };
 
-export default CatalogCard;
+export default WoodCount;

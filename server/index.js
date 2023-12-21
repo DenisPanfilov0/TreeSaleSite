@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const register = require('./src/RegisterUtils.js')
 const Order = require('./src/OrderModel.js');
+const Wood = require('./src/WoodModel.js');
 
 mongoose.connect('mongodb+srv://Alexander:1q2w3e4r@cluster0.jwcpdzh.mongodb.net/all_users', {
   // useUnifiedTopology: true,
@@ -208,6 +209,53 @@ app.post('/api/update_order_status/:orderId', async (req, res) => {
     res.json({ success: true });
   } catch (error) {
     console.error('Error updating order status:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/woods', async (req, res) => {
+  try {
+    const { productName } = req.query;
+
+    // Проверка наличия имени в запросе
+    if (!productName) {
+      return res.status(400).json({ success: false, error: 'Missing productName parameter' });
+    }
+
+    const wood = await Wood.findOne({ productName });
+
+    if (wood) {
+      res.json({ success: true, wood });
+    } else {
+      res.json({ success: true, wood: null }); // или можно вернуть пустой массив в зависимости от ваших требований
+    }
+  } catch (error) {
+    console.error('Error fetching woods:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+app.post('/api/woodsAdd', async (req, res) => {
+  const { productName, quantity } = req.body;
+
+  try {
+    const existingWood = await Wood.findOne({ productName });
+    if (existingWood) {
+      await Wood.deleteOne({ productName: existingWood.productName });
+      console.log('Removed existing wood:', existingWood);
+
+      const newWood = new Wood({ productName, quantity });
+      await newWood.save();
+      res.json({ success: true, wood: newWood });
+      console.log('Created new wood:', newWood);
+    } else {
+      console.log('2')
+      const newWood = new Wood({ productName, quantity });
+      await newWood.save();
+      res.json({ success: true, wood: newWood });
+    }
+  } catch (error) {
+    console.error('Error saving wood:', error);
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });

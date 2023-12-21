@@ -10,6 +10,9 @@ import Order from './pages/Order/Order';
 import EditOrder from './pages/Order/EditOrder';
 import Admin from './pages/Admin/Admin';
 import ContractPage from './pages/ContractPage';
+import SampleContractPage from './pages/SampleContractPage';
+import Contacts from './pages/Contacts/Contacts';
+import WoodCount from './pages/WoodCount/index';
 import { $user } from './Store/Store';
 import { useUnit } from 'effector-react';
 
@@ -32,7 +35,10 @@ const App = () => {
             <Route path="/order" element={<Order />} />
             <Route path="/editOrder" element={<EditOrder />} />
             <Route path="/ContractPage" element={<ContractPage />} />
+            <Route path="/SampleContractPage" element={<SampleContractPage />} />
+            <Route path="/contacts" element={<Contacts />} />
             {user?.isAdmin && <Route path="/admin" element={<Admin />} />}
+            {user?.isAdmin && <Route path="/woodCount" element={<WoodCount />} />}
           </Routes>
         </Layout.Content>
       </Layout.Content>

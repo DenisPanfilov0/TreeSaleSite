@@ -76,7 +76,7 @@ const Order: React.FC = () => {
   const [isPaymentVisible, setIsPaymentVisible] = useState(false);
 
  
-  const onFinish = async (values: IOrder) => { createOrder({...values, finalPrice, user_id: user?._id, product_id: product.id}); navigate('/catalog')}
+  const onFinish = async (values: IOrder) => { createOrder({...values, finalPrice, user_id: user?._id, product_id: product.id}); navigate('/profile')}
 
 
   const [cardNumber, setCardNumber] = useState<string>('');
