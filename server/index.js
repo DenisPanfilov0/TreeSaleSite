@@ -260,6 +260,17 @@ app.post('/api/woodsAdd', async (req, res) => {
   }
 });
 
+app.get('/api/orderDelete/:orderId', async (req, res) => {
+  
+    const { orderID } = req.params;
+    console.log(orderID)
+
+    const existingOrder = await Order.findOne({ orderID });
+    console.log(existingOrder)
+
+    await Order.deleteOne({_id: existingOrder._id});
+});
+
 app.get('/', (req, res) => {
   res.send('Привет, мир!');
 });

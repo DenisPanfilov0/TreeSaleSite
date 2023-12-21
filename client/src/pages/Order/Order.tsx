@@ -40,6 +40,22 @@ const Order: React.FC = () => {
   const [form] = Form.useForm();
   const quality = Form.useWatch('amount', form)
 
+  const [minDeliveryDate, setMinDeliveryDate] = useState<Date | null>(null);
+  const [deliveryOption, setDeliveryOption] = useState<string>();
+
+  useEffect(() => {
+    const today = new Date();
+    today.setDate(today.getDate() + 1); 
+    setMinDeliveryDate(today);
+  }, []);
+
+  const disabledDate = (current: any) => {
+    if (minDeliveryDate) {
+      return current && current < minDeliveryDate;
+    }
+    return false;
+  };
+
   const handleServiceChange = (value: string) => {
     setSelectedService(value);
     const quantity = form.getFieldValue('amount') || 0;
@@ -127,37 +143,30 @@ const Order: React.FC = () => {
         labelCol={{ span: 7 }}
         wrapperCol={{ span: 20 }}
         layout="horizontal"
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: 700 }}
         onFinish={onFinish}
-        initialValues={{ productName: product.name }}
+        initialValues={{ productName: product.name, amount: 0, deliveryOption: 'pickup'}}
       >
 
 
-        <Form.Item label="Имя" name="firstName">
+        <Form.Item label="Имя" name="firstName" rules={[{ required: true, message: 'Введите имя' }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item label="Фамилия" name="lastName">
+        <Form.Item label="Фамилия" name="lastName" rules={[{ required: true, message: 'Введите фамилию' }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item label="Отчество" name="middleName">
+        <Form.Item label="Отчество" name="middleName" rules={[{ required: true, message: 'Введите отчество' }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item label="Адрес доставки" name="deliveryAddress">
+        <Form.Item label="Адрес доставки" name="deliveryAddress" rules={[{ required: true, message: 'Введите адрес доставки' }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item label="Номер Телефона" name="phoneNumber">
+        <Form.Item label="Номер Телефона" name="phoneNumber" rules={[{ required: true, message: 'Введите номер телефона' }]}>
           <Input />
-        </Form.Item>
-
-        <Form.Item label="Дата Доставки" name="deliveryDate">
-          <DatePicker
-            showTime={false} 
-            format="YYYY-MM-DD"
-          />
         </Form.Item>
 
         <Form.Item label="Товар" name="productName">
@@ -170,16 +179,17 @@ const Order: React.FC = () => {
           rules={[
           {
             required: true,
-            message: 'Пожалуйста, введите количество товара!',
+            message: 'Введите количество товара!',
           },
           ]}>
           <InputNumber
             formatter={(value) => (value ? `${value}` : '')}
-            parser={(value: any) => (value ? Number(value.replace(/\D/g, '')) : 0)}
-          />
+            parser={(value: any) => Math.max(0, value ? Number(value.replace(/\D/g, '')) : 0)} 
+            min={0} 
+  />
         </Form.Item>
 
-        <Form.Item label="Доп. услуги" name="additionalService">
+        <Form.Item label="Доп. услуги" name="additionalService" rules={[{ required: true, message: 'Выберите доп. услуги' }]}>
           <Radio.Group onChange={(e) => handleServiceChange(e.target.value)} value={selectedService}>
             {product?.costLogs && (
             <Radio value="logs"> В чурках ({product.costLogs}$) </Radio>
@@ -190,19 +200,37 @@ const Order: React.FC = () => {
           </Radio.Group>
         </Form.Item>
 
-        <Form.Item label="Стоимость доставки" name="deliveryCost">
-          <Radio.Group onChange={(e) => handleDeliveryChange(e.target.value)}>
-            <Radio value="30"> до 30км + 40р </Radio>
-            <Radio value="60"> до 60км + 60р  </Radio>
-            <Radio value="100"> до 100км + 80р </Radio>
+
+        <Form.Item label="Способ доставки" name="deliveryOption">
+          <Radio.Group onChange={(e) => setDeliveryOption(e.target.value)} value={deliveryOption}>
+            <Radio value="pickup"> Самовывоз </Radio>
+            <Radio value="delivery" disabled={quality < 5}>
+              Доставка {quality < 5 && <span style={{ color: 'red' }}>Минимальный объем доставки от 5м³</span>}
+            </Radio>
           </Radio.Group>
         </Form.Item>
+
+        {deliveryOption === 'delivery' && (
+          <>
+          <Form.Item label="Дата Доставки" name="deliveryDate" rules={[{ required: true, message: 'Введите дату доставки' }]}>
+            <DatePicker showTime={false} format="YYYY-MM-DD" disabledDate={disabledDate} />
+          </Form.Item>
+
+          <Form.Item label="Стоимость доставки" name="deliveryCost" rules={[{ required: true, message: 'Выберите стоимость доставки' }]}>
+            <Radio.Group onChange={(e) => handleDeliveryChange(e.target.value)}>
+              <Radio value="30"> до 30км + 40р </Radio>
+              <Radio value="60"> до 60км + 60р  </Radio>
+              <Radio value="100"> до 100км + 80р </Radio>
+            </Radio.Group>
+          </Form.Item>
+  </>
+)}
 
         <Form.Item label="Коментарий" name="comment">
           <TextArea rows={4} />
         </Form.Item>
 
-        <Form.Item label="Способ оплаты" name="paymentMethod">
+        <Form.Item label="Способ оплаты" name="paymentMethod" rules={[{ required: true, message: 'Выберите способ оплаты' }]}>
           <Radio.Group>
             <Radio value="cash" onChange={() => setIsPaymentVisible(false)}> Наличными </Radio>
             <Radio value="non-cash" onChange={() => setIsPaymentVisible(true)}> Безналичный </Radio>
@@ -211,7 +239,7 @@ const Order: React.FC = () => {
 
         {isPaymentVisible && (
           <>
-            <Form.Item label="Номер карты">
+            <Form.Item label="Номер карты" rules={[{ required: true, message: 'Введите номер карты' }]}>
         <Input
           placeholder="Номер карты"
           value={cardNumber}
@@ -219,7 +247,7 @@ const Order: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item label="Срок действия">
+      <Form.Item label="Срок действия" rules={[{ required: true, message: 'Введите срок действия карты' }]}>
         <Input
           placeholder="Срок действия"
           value={expiryDate}
@@ -227,7 +255,7 @@ const Order: React.FC = () => {
         />
       </Form.Item>
 
-      <Form.Item label="CVV">
+      <Form.Item label="CVV" rules={[{ required: true, message: 'Введите CVV карты' }]}>
         <Input
           placeholder="CVV"
           value={cvv}
@@ -237,11 +265,11 @@ const Order: React.FC = () => {
           </>
         )}
 
-        <Form.Item label="Серия и номер паспорта" name="passportSeriesNumber">
+        <Form.Item label="Серия и номер паспорта" name="passportSeriesNumber" rules={[{ required: true, message: 'Введите серию и номер паспорта' }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item label="Где и кем выдан паспорт" name="passportIssuedBy">
+        <Form.Item label="Где и кем выдан паспорт" name="passportIssuedBy" rules={[{ required: true, message: 'Введите где и кем выдан паспорт' }]}>
           <Input />
         </Form.Item>
 

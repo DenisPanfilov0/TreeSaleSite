@@ -17,12 +17,14 @@ const UserProfile: React.FC = () => {
   const user = useUnit($user);
   const [orders, setOrders] = useState<IOrder[]>([]);
   const navigate = useNavigate();
+  const [forceUpdate, setForceUpdate] = useState<number>(0);
 
   useEffect(() => {
     const fetchUserOrders = async () => {
       try {
         if (user?._id) {
           const response = await axios.get(`http://localhost:3000/api/orders/${user._id}`);
+          setForceUpdate((prev) => prev + 1);
           const data = response.data;
     
           if (data.success) {
@@ -37,7 +39,7 @@ const UserProfile: React.FC = () => {
     };
 
     fetchUserOrders();
-  }, [user]);
+  }, [user, forceUpdate]);
 
   const handleEditOrder = async (orderId: string) => {
     const response = await axios.get(`http://localhost:3000/api/editOrders/${orderId}`)
@@ -50,7 +52,10 @@ const UserProfile: React.FC = () => {
     navigate('/ContractPage', { state: { order: response.data.order } });
   }
 
-
+  const orderDelete = async (orderId: string) => {
+    const response = await axios.get(`http://localhost:3000/api/orderDelete/${orderId}`)
+    
+  }
 
 
 
@@ -82,6 +87,13 @@ const UserProfile: React.FC = () => {
 
   const columns = [
     {
+      title: ' ',
+      key: 'actions',
+      render: (text: any, record: IOrder) => (
+          <Button type='primary' onClick={() => orderDelete(record._id)}>Удалить</Button>
+      ),
+    },
+    {
       title: 'Договор',
       key: 'actions',
       render: (text: any, record: IOrder) => (
@@ -89,12 +101,23 @@ const UserProfile: React.FC = () => {
       ),
     },
     {
+      title: 'Статус',
+      dataIndex: 'orderStatus',
+      key: 'orderStatus',
+    },
+    {
       title: 'Действия',
       key: 'actions',
       render: (text: any, record: IOrder) => (
-        <Button type="link" onClick={() => handleEditOrder(record._id)}>
-          Изменить
-        </Button>
+        record.orderStatus === 'Заказ на редактировании' ? (
+          <Button type="link" onClick={() => handleEditOrder(record._id)}>
+            Изменить
+          </Button>
+        ) : (
+          <Button type="link" disabled>
+            Изменить
+          </Button>
+        )
       ),
     },
     {
