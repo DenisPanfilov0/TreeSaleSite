@@ -100,11 +100,11 @@ const UserProfile: React.FC = () => {
           <Button type='primary' onClick={() => consoleWrite(record._id)}>Печать</Button>
       ),
     },
-    {
-      title: 'Статус',
-      dataIndex: 'orderStatus',
-      key: 'orderStatus',
-    },
+    // {
+    //   title: 'Статус',
+    //   dataIndex: 'orderStatus',
+    //   key: 'orderStatus',
+    // },
     {
       title: 'Действия',
       key: 'actions',

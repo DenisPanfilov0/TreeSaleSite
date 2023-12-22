@@ -3,76 +3,76 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({
     user_id: {
     type: String,
-    required: true,
+    required: false,
   },
   firstName: {
     type: String,
-    required: true,
+    required: false,
   },
   lastName: {
     type: String,
-    required: true,
+    required: false,
   },
   middleName: {
     type: String,
-    required: true,
+    required: false,
   },
   deliveryAddress: {
     type: String,
-    required: true,
+    required: false,
   },
   phoneNumber: {
     type: String,
-    required: true,
+    required: false,
   },
   deliveryDate: {
     type: String,
-    required: true,
+    required: false,
   },
   productName: {
     type: String,
-    required: true,
+    required: false,
   },
   amount: {
     type: Number,
-    required: true,
+    required: false,
   },
   additionalService: {
     type: String,
-    required: true,
+    required: false,
   },
   comment: {
     type: String,
-    required: true,
+    required: false,
   },
   paymentMethod: {
     type: String,
-    required: true,
+    required: false,
   },
   finalPrice: {
     type: Number,
-    required: true,
+    required: false,
   },
   deliveryCost: {
     type: String,
-    required: true,
+    required: false,
   },
   orderStatus: {
     type: String,
-    required: true,
-    default: 'в обработке',
+    required: false,
+    default: 'Заказ на редактировании',
   },
   product_id: {
     type: Number,
-    required: true,
+    required: false,
   },
   passportSeriesNumber: {
     type: Number,
-    required: true,
+    required: false,
   },
   passportIssuedBy: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
