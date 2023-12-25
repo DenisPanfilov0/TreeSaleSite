@@ -1,3 +1,7 @@
+/*Этот файл отвечает за настройку маршрутизации веб-приложения с использованием React Router, 
+определение компонентов страниц и их отображение в зависимости от текущего маршрута. 
+Также файл содержит основной макет приложения, включая шапку (Header) и основное содержимое (Layout.Content), 
+а также проверку статуса Admin для отображения соответствующих страниц, таких как "Admin" и "WoodCount".*/
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import Header from './layout/Header';
@@ -13,6 +17,8 @@ import ContractPage from './pages/ContractPage';
 import SampleContractPage from './pages/SampleContractPage';
 import Contacts from './pages/Contacts/Contacts';
 import WoodCount from './pages/WoodCount/index';
+import DeliveryAndPayment from './pages/DeliveryAndPayment/index';
+import Home from './pages/Home/index';
 import { $user } from './Store/Store';
 import { useUnit } from 'effector-react';
 
@@ -29,6 +35,7 @@ const App = () => {
         <Layout.Content className="site-layout" style={{ padding: '0 50px' }}>
           <Routes>
             <Route path="/login" element={<LogIn />} />
+            <Route path="/" element={<Home />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/catalog" element={<CatalogCard />} />
             <Route path="/profile" element={<Profile />} />
@@ -37,6 +44,7 @@ const App = () => {
             <Route path="/ContractPage" element={<ContractPage />} />
             <Route path="/SampleContractPage" element={<SampleContractPage />} />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/deliveryAndPayment" element={<DeliveryAndPayment />} />
             {user?.isAdmin && <Route path="/admin" element={<Admin />} />}
             {user?.isAdmin && <Route path="/woodCount" element={<WoodCount />} />}
           </Routes>

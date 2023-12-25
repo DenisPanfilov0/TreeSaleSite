@@ -1,3 +1,7 @@
+/*//Этот файл представляет собой компонент React, отвечающий за верхнюю часть интерфейса (шапку) веб-приложения,
+//включая навигационные ссылки, кнопки и логотип,
+//и отображение различных элементов в зависимости от статуса пользователя (admin = true или admin = false), 
+//используя библиотеки React, Ant Design и Effector.*/
 import { Link, useNavigate } from 'react-router-dom';
 import { Layout, Space, Button, Image } from 'antd';
 import { useUnit } from 'effector-react';
@@ -31,9 +35,11 @@ const Header = () => {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
             <Image src={logo} alt="Logo" preview={false} style={{ height: '50px' }} />
           </div>
+          <Link to='/'><Button type='primary' className="header-button">Главная</Button></Link>
           {user?.isAdmin && <Link to='/admin'><Button type='primary' className="header-button">Админ</Button></Link>}
           {user?.isAdmin && <Link to='/woodCount'><Button type='primary' className="header-button">Древесина</Button></Link>}
           <Link to='/SampleContractPage'><Button type='primary' className="header-button">Договор</Button></Link>
+          <Link to='/delivery'><Button type='primary' className="header-button">Доставка</Button></Link>
           <Link to='/catalog'><Button type='primary' className="header-button">Каталог</Button></Link>
           {!user && <><Link to='/login'><Button type='primary' className="header-button">Войти</Button></Link><Link to='/register'><Button type='primary'>Регистрация</Button></Link></>}
           {user && <Link to='/profile'><Button type='primary' className="header-button">Профиль</Button></Link>}

@@ -1,3 +1,6 @@
+/*//Этот файл отвечает за отображение карточки товара в каталоге, включая изображение, название, цену, 
+//описание и доступность товара, а также предоставляющий кнопку для оформления заказа, 
+//взаимодействуя с сервером через HTTP-запросы и используя библиотеки React, Ant Design, Effector и Axios.*/
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Row, Col, Typography } from 'antd';
 import { useUnit } from 'effector-react';

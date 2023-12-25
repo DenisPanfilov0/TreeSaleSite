@@ -1,3 +1,6 @@
+/*//Этот файл отвечает за создание компонента React, представляющего страницу оформления заказа. 
+//В нем используются хуки состояния, эффекты и события из библиотеки Effector для управления состоянием 
+//и выполнения асинхронных операций, также включает в себя форму для ввода данных заказа, расчета стоимости и выбора способа оплаты.*/
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useStore } from 'effector-react';
@@ -192,10 +195,10 @@ const Order: React.FC = () => {
         <Form.Item label="Доп. услуги" name="additionalService" rules={[{ required: true, message: 'Выберите доп. услуги' }]}>
           <Radio.Group onChange={(e) => handleServiceChange(e.target.value)} value={selectedService}>
             {product?.costLogs && (
-            <Radio value="logs"> В чурках ({product.costLogs}$) </Radio>
+            <Radio value="logs"> В чурках ({product.costLogs}руб) </Radio>
             )}
             {product?.costChoppedWood && (
-            <Radio value="firewood"> Колотые ({product.costChoppedWood}$) </Radio>
+            <Radio value="firewood"> Колотые ({product.costChoppedWood}руб) </Radio>
             )}
           </Radio.Group>
         </Form.Item>

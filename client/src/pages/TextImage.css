@@ -1,3 +1,7 @@
+/*Этот файл содержит стили для позиционирования и оформления элементов на изображении, 
+предназначенного для отображения контента договора. Определены абсолютные позиции и размеры шрифтов 
+для различных текстовых блоков, таких как дата, название продукта, количество, стоимость и др. 
+В режиме печати задано отображение контейнера с изображением и его настройки для печати.*/
 .image-scroll-container {
   position: relative;
   display: none;
@@ -5,146 +9,129 @@
 
 .contract_date {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 50pt;  */
   left: 370pt;
-  top: 64pt;
+  top: 70pt;
   font-size: 9pt;
 }
 
 .name_date {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 316pt;  */
-  left: 65pt;
-  top: 104pt;
+  left: 68pt;
+  top: 111pt;
   font-size: 6pt;
 }
 
 .product_name {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 315pt;  */
-  left: 88pt;
-  top: 204pt;
+  left: 90pt;
+  top: 210pt;
   font-size: 6pt;
 }
 
 .amount {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 283pt;  */
   left: 154pt;
-  top: 204pt;
+  top: 210pt;
   font-size: 6pt;
 }
 
 .additional_service {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 200pt; */
-  left: 231pt; 
-  top: 204pt;
+  left: 233pt; 
+  top: 210pt;
   font-size: 6pt;
 }
 
 .cost {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 147pt;  */
-  left: 280pt;
-  top: 204pt;
+  left: 282pt;
+  top: 210pt;
   font-size: 6pt;
 }
 
 .delivery_cost {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 89pt;  */
-  left: 335pt;
-  top: 204pt;
+  left: 337pt;
+  top: 210pt;
   font-size: 6pt;
 }
 
 .total_cost {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 31pt;  */
-  left: 393pt;
-  top: 204pt;
+  left: 395pt;
+  top: 210pt;
   font-size: 6pt;
 }
 
 .delivery_address {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 302pt;  */
-  left: 65pt;
-  top: 433pt;
+  left: 68pt;
+  top: 439pt;
   font-size: 6pt;
 }
 
 .full_name_date {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 316pt;  */
-  left: 250pt;
-  top: 1140pt;
+  left: 251pt;
+  top: 1144pt;
   font-size: 6pt;
 }
 
 .full_delivery_address {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 316pt;  */
-  left: 268pt;
-  top: 1157pt;
+  left: 272pt;
+  top: 1161pt;
   font-size: 6pt;
 }
 
 .phone_number {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 316pt;  */
-  left: 270pt;
-  top: 1173pt;
+  left: 272pt;
+  top: 1177pt;
   font-size: 6pt;
 }
 
 .passport_series_number {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 316pt;  */
-  left: 300pt;
-  top: 1205pt;
+  left: 302pt;
+  top: 1209pt;
   font-size: 6pt;
 }
 
 .passport_issued_by {
   position: absolute;
-  border: 5px solid red;
+  /* border: 5px solid red; */
   /* right: 316pt;  */
-  left: 310pt;
-  top: 1221pt;
+  left: 312pt;
+  top: 1225pt;
   font-size: 6pt;
 }
-
-
-/* .delivery_address {
-  position: relative;
-  top: -12cm;
-  left: 420px;
-  right: 0;
-  bottom: 0;
-  align-items: center;
-  justify-content: center;
-  color: black;
-  text-align: center;
-} */
-  
-/* .image-overlay p {
-  margin: 0;
-} */
 
 @media print {
   .image-scroll-container {

@@ -1,3 +1,6 @@
+/*//Этот файл содержит компонент React для регистрации пользователя (Registration). 
+//В компоненте определены форма с полями для ввода имени пользователя, электронной почты, 
+//пароля, подтверждения пароля и номера телефона. Компонент также включает кнопку для отправки данных регистрации.*/
 import { Button, Checkbox, Col, Form, Input, Row, } from 'antd';
 import { useUnit } from 'effector-react';
 import { useNavigate } from 'react-router-dom';

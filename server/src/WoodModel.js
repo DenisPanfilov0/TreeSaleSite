@@ -1,3 +1,5 @@
+/*Этот файл описывает модель Древесины, описывая её характеристики 
+(имя продукции и её количество на складе) и экспортируем модель Wood*/
 const mongoose = require('mongoose');
 
 const woodSchema = new mongoose.Schema({

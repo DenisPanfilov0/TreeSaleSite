@@ -1,3 +1,6 @@
+/*//Этот файл представляет компонент React, отвечающий за отображение карточки товара 
+//с информацией о количестве доступных дров, и предоставляет функциональность для изменения 
+//этого количества с использованием Effector и запросов к серверу.*/
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Typography, Input, Form} from 'antd';
 import { useUnit } from 'effector-react';

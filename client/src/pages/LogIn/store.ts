@@ -1,3 +1,6 @@
+/*//Этот файл отвечает за создание эффектов и событий с использованием библиотеки Effector 
+//для выполнения запроса на сервер при входе в систему, управления состоянием загрузки 
+//и обновления данных пользователя в хранилище при успешной аутентификации.*/
 import { createEvent, createEffect, sample } from 'effector';
 import axios from 'axios';
 import { setUser, resetUser } from '../../Store/Store';

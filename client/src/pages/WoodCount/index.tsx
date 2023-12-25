@@ -1,3 +1,5 @@
+/*//Этот файл представляет страницу React, отвечающую за отображение списка продуктов, 
+//каждый из которых представлен компонентом WoodCount и последующем рендере этого компонента.*/
 import React from 'react';
 import { Row, Col } from 'antd';
 import WoodCount from './WoodCount';

@@ -1,3 +1,6 @@
+/*//Этот файл представляет собой компонент React для страницы входа в систему, который включает форму 
+//с полями для ввода электронной почты и пароля, использует состояния для управления загрузкой 
+//и вызывает функцию для входа в систему при отправке формы.*/
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useUnit } from 'effector-react';
 import { Button, Form, Input, Row, Col } from 'antd';
