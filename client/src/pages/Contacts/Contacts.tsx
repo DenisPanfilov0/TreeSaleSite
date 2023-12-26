@@ -3,6 +3,7 @@
 //на соответствующей странице веб-приложения с использованием библиотеки Ant Design.*/
 import React from 'react';
 import { Table } from 'antd';
+import firstImage from './Maps.jpg'
 
 
 interface Contact {
@@ -49,12 +50,20 @@ const data: Contact[] = [
 
 const ContactTable: React.FC = () => {
   return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '50px' }}>
     <Table
       columns={columns}
       dataSource={data}
       pagination={false} // Убираем отображение пагинации
     />
+    <img
+            src={firstImage} // Замените ссылкой на вашу вторую картинку
+            alt="Second Image"
+            style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '8px' }}
+          />
+    </div>
   );
+  
 };
 
 export default ContactTable;

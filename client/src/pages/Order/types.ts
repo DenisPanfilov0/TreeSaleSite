@@ -13,6 +13,7 @@ export interface IOrder {
     productName: string;
     amount: number;
     additionalService: string;
+    deliveryOption: string;
     comment: string;
     paymentMethod: string;
     finalPrice: number;
@@ -21,4 +22,8 @@ export interface IOrder {
     product_id: number;
     passportSeriesNumber: number;
     passportIssuedBy: string;
+    dateOfIssued: string;
+    numberCard: string;
+    dateCard: string;
+    cvvCard: string;
   }

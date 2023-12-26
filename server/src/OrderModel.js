@@ -43,6 +43,10 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  deliveryOption: {
+    type: String,
+    required: false,
+  },
   comment: {
     type: String,
     required: false,
@@ -69,10 +73,26 @@ const orderSchema = new mongoose.Schema({
     required: false,
   },
   passportSeriesNumber: {
-    type: Number,
+    type: String,
     required: false,
   },
   passportIssuedBy: {
+    type: String,
+    required: false,
+  },
+  dateOfIssued: {
+    type: String,
+    required: false,
+  },
+  numberCard: {
+    type: String,
+    required: false,
+  },
+  dateCard: {
+    type: String,
+    required: false,
+  },
+  cvvCard: {
     type: String,
     required: false,
   },

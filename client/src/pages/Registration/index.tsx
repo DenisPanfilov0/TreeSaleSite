@@ -49,7 +49,7 @@ const Registration = () => {
         >
           <Form.Item
             name="username"
-            label="Nickname"
+            label="Имя пользователя"
             tooltip="What do you want others to call you?"
             rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
           >
@@ -58,7 +58,7 @@ const Registration = () => {
 
           <Form.Item
             name="email"
-            label="E-mail"
+            label="E-mail почту"
             rules={[
               {
                 type: 'email',
@@ -75,7 +75,7 @@ const Registration = () => {
 
           <Form.Item
             name="password"
-            label="Password"
+            label="Пароль"
             rules={[
               {
                 required: true,
@@ -89,7 +89,7 @@ const Registration = () => {
 
           <Form.Item
             name="confirm"
-            label="Confirm Password"
+            label="Подтвердите пароль"
             dependencies={['password']}
             hasFeedback
             rules={[
@@ -112,7 +112,7 @@ const Registration = () => {
 
           <Form.Item
             name="phone"
-            label="Phone Number"
+            label="Номер телефона"
             rules={[{ required: true, message: 'Please input your phone number!' }]}
           >
             <Input style={{ width: '100%' }} />

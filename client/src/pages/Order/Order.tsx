@@ -95,8 +95,18 @@ const Order: React.FC = () => {
   const [isPaymentVisible, setIsPaymentVisible] = useState(false);
 
  
-  const onFinish = async (values: IOrder) => { createOrder({...values, finalPrice, user_id: user?._id, product_id: product.id}); navigate('/profile')}
-
+  const onFinish = async (values: IOrder) => { createOrder({
+    ...values, 
+    finalPrice, 
+    user_id: user?._id, 
+    product_id: product.id,
+    numberCard: cardNumber,
+    dateCard: expiryDate,
+    cvvCard: cvv,
+  }); navigate('/profile')}
+// const onFinish = async (values: IOrder) => {
+//   console.log(values);
+// }
 
   const [cardNumber, setCardNumber] = useState<string>('');
   const [expiryDate, setExpiryDate] = useState<string>('');
@@ -152,11 +162,11 @@ const Order: React.FC = () => {
       >
 
 
-        <Form.Item label="Имя" name="firstName" rules={[{ required: true, message: 'Введите имя' }]}>
+        <Form.Item label="Фамилия" name="lastName" rules={[{ required: true, message: 'Введите фамилию' }]}>
           <Input />
         </Form.Item>
 
-        <Form.Item label="Фамилия" name="lastName" rules={[{ required: true, message: 'Введите фамилию' }]}>
+        <Form.Item label="Имя" name="firstName" rules={[{ required: true, message: 'Введите имя' }]}>
           <Input />
         </Form.Item>
 
@@ -204,7 +214,7 @@ const Order: React.FC = () => {
         </Form.Item>
 
 
-        <Form.Item label="Способ доставки" name="deliveryOption">
+        <Form.Item label="Способ доставки" name="deliveryOption" rules={[{ required: true, message: 'Выберите способ доставки' }]}>
           <Radio.Group onChange={(e) => setDeliveryOption(e.target.value)} value={deliveryOption}>
             <Radio value="pickup"> Самовывоз </Radio>
             <Radio value="delivery" disabled={quality < 5}>
@@ -242,13 +252,13 @@ const Order: React.FC = () => {
 
         {isPaymentVisible && (
           <>
-            <Form.Item label="Номер карты" rules={[{ required: true, message: 'Введите номер карты' }]}>
-        <Input
-          placeholder="Номер карты"
-          value={cardNumber}
-          onChange={(e) => formatCardNumber(e.target.value)}
-        />
-      </Form.Item>
+        <Form.Item label="Номер карты" rules={[{ required: true, message: 'Введите номер карты' }]}>
+          <Input
+            placeholder="Номер карты"
+            value={cardNumber}
+            onChange={(e) => formatCardNumber(e.target.value)}
+          />
+        </Form.Item>
 
       <Form.Item label="Срок действия" rules={[{ required: true, message: 'Введите срок действия карты' }]}>
         <Input
@@ -273,6 +283,10 @@ const Order: React.FC = () => {
         </Form.Item>
 
         <Form.Item label="Где и кем выдан паспорт" name="passportIssuedBy" rules={[{ required: true, message: 'Введите где и кем выдан паспорт' }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="Дата выдачи" name="dateOfIssued" rules={[{ required: true, message: 'Введите дату выдачи паспорта' }]}>
           <Input />
         </Form.Item>
 

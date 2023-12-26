@@ -3,15 +3,25 @@
 //основанный на данных, полученных с сервера через HTTP-запросы с использованием библиотек React, Axios и Ant Design.*/
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Select } from 'antd';
+import { Table, Select, Button, Popover } from 'antd';
 import { IOrder } from '../Order/types';
+import { useNavigate } from 'react-router-dom';
+import { useUnit } from 'effector-react';
+import { $user } from '../../Store/Store';
+
+
 
 const { Option } = Select;
 
 
 const AdminPanel: React.FC = () => {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [orderStatus, setOrderStatus] = useState<string | null>(null);
+  const user = useUnit($user);
+  const [forceUpdate, setForceUpdate] = useState<number>(0);
+
+
 
   const handleStatusChange = async (value: string, orderId: string) => {
     try {
@@ -33,6 +43,7 @@ const AdminPanel: React.FC = () => {
     const fetchAllOrders = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/all_orders');
+        setForceUpdate((prev) => prev + 1);
         const data = response.data;
 
         if (data.success) {
@@ -46,9 +57,61 @@ const AdminPanel: React.FC = () => {
     };
 
     fetchAllOrders();
-  }, []);
+  }, [user, forceUpdate]);
+
+  const handleEditOrder = async (orderId: string) => {
+    const response = await axios.get(`http://localhost:3000/api/editOrders/${orderId}`)
+    navigate('/editOrder', { state: { order: response.data.order } });
+    console.log(response.data)
+  };
+
+  const consoleWrite = async (orderId: string) => {
+    const response = await axios.get(`http://localhost:3000/api/editOrders/${orderId}`)
+    navigate('/ContractPage', { state: { order: response.data.order } });
+  }
+
+  const orderDelete = async (orderId: string) => {
+    const response = await axios.get(`http://localhost:3000/api/orderDelete/${orderId}`)
+  }
+
+  const renderCommentPopover = (comment: string) => {
+    return (
+      <Popover content={comment} title="Комментарий">
+        <Button type="link">Комментарий</Button>
+      </Popover>
+    );
+  };
 
   const columns = [
+    {
+      title: ' ',
+      key: 'actions',
+      render: (text: any, record: IOrder) => (
+          <Button type='primary' onClick={() => orderDelete(record._id)}>Удалить</Button>
+      ),
+    },
+    {
+      title: 'Договор',
+      key: 'actions',
+      render: (text: any, record: IOrder) => (
+          <Button type='primary' onClick={() => consoleWrite(record._id)}>Печать</Button>
+      ),
+    },
+    {
+      title: 'Действия',
+      key: 'actions',
+      render: (text: any, record: IOrder) => (
+        record.orderStatus === 'Заказ на редактировании' ? (
+          <Button type="link" onClick={() => handleEditOrder(record._id)}>
+            Изменить
+          </Button>
+        ) : (
+          <Button type="link" disabled>
+            Изменить
+          </Button>
+        )
+      ),
+    },
     {
       title: 'ФИО',
       dataIndex: 'lastName',
@@ -73,9 +136,13 @@ const AdminPanel: React.FC = () => {
       dataIndex: 'deliveryDate',
       key: 'deliveryDate',
       render: (text: any, record: { deliveryDate: string }) => {
+        if (record.deliveryDate) {
         const dateObject = new Date(record.deliveryDate);
         const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1).toString().padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')}`;
         return formattedDate;
+        } else {
+        return 'Самовывоз';
+        }
       },
     },
     {
@@ -148,7 +215,7 @@ const AdminPanel: React.FC = () => {
       <h2>Админ-панель</h2>
       <h3>Все заказы:</h3>
       {orders.length > 0 ? (
-        <Table dataSource={orders} columns={columns} bordered />
+        <Table dataSource={orders} columns={columns} bordered scroll={{ x: 'max-content' }} />
       ) : (
         <p>Нет доступных заказов</p>
       )}

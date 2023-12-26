@@ -1,0 +1,39 @@
+.contract-page1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Высота 100% видимого экрана */
+}
+
+.contract-content1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-scroll-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-scroll-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  scrollbar-width: thin; 
+  scrollbar-color: transparent transparent; 
+}
+
+.image-scroll-container {
+  overflow-y: visible;
+}
+
+.image-scroll-container1 img {
+  width: 100%;
+  height: auto;
+  margin: 20px 0;
+  margin-left: -70px;
+}
+

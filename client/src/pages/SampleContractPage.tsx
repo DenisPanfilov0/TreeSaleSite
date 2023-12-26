@@ -1,23 +1,31 @@
-/*//Этот файл представляет страницу React, отвечающую за отображение образца договора без заполненных полей.*/
-const ContractPage = () => {
+import React from 'react';
+import './SampleContractPage.css'; // Создайте файл ContractPage.css для стилей
+import { Button } from 'antd';
+
+const SampleContractPage = () => {
+
+  const handleDownload = () => {
+    const filePath = process.env.PUBLIC_URL + '/document.pdf'; // Путь к файлу в папке public
+    const link = document.createElement('a');
+    link.href = filePath;
+    link.download = 'document.pdf'; // Имя файла для скачивания
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
-    <div className="contract-page">
-      <div className="contract-content">
+    <div className="contract-page1">
+      <div className="contract-content1">
         <h1>Договор</h1>
-        <p>Имя пользователя: {/*user.username*/}</p>
-        <p>Email: {/*user.email*/}</p>
-        <p>Детали заказа: {/*order.details*/}</p>
-        <button onClick={() => window.print()}>Печать</button>
+        <Button type='primary' onClick={handleDownload}>Скачать документ</Button>
       </div>
-      <div className="image-scroll-container">
+      <div className="image-scroll-container1">
         <img src="/image/dogovor_po_drovam2_page-0001.jpg" alt="Image 1" />
-        {/* <div className="delivery_address"><p>"Адрес Доставки"</p></div> */}
         <img src="/image/dogovor_po_drovam2_page-0002.jpg" alt="Image 2" />
-        {/* <ImageOverlay text="Текст поверх изображения 2" /> */}
       </div>
     </div>
   );
 };
 
-export default ContractPage;
+export default SampleContractPage;

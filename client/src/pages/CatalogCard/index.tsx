@@ -21,40 +21,36 @@ const ProductsPage: React.FC = () => {
   };
 
   const helpFormOptions = [
-    { label: 'Для камина', value: 'fireplace', answer: 'Рекомендуем использовать древесину: Дуб' },
-    { label: 'Для бани', value: 'bath', answer: 'Рекомендуем использовать древесину: Береза' },
+    { label: 'Для камина', value: 'fireplace', answer: 'Рекомендуем использовать: Дубовые дрова' },
+    { label: 'Для бани', value: 'bath', answer: 'Рекомендуем использовать: Березовые дрова' },
     {
       label: 'Для топки печи',
       value: 'stove',
-      answer: 'Рекомендуем использовать древесину: Лиственный микс или Хвойные дрова',
+      answer: 'Рекомендуем использовать: Лиственный микс или Хвойные дрова',
     },
-    { label: 'Для мангала', value: 'grill', answer: 'Рекомендуем использовать древесину: Лиственный микс' },
+    { label: 'Для мангала', value: 'grill', answer: 'Рекомендуем использовать: Лиственный микс' },
   ];
 
   const selectedOption = helpFormOptions.find((option) => option.value === selectedWoodPurpose);
 
   return (
     <div style={{ marginTop: 16 }}>
-      <Row gutter={[16, 16]}>
-        {products.map((product) => (
-          <Col key={product.id} xs={8} sm={8} md={8} lg={8}>
-            <CatalogCard product={product} />
-          </Col>
-        ))}
-      </Row>
       <div style={{ textAlign: 'center', marginTop: 24 }}>
         <Button type="primary" size="large" onClick={handleHelpButtonClick}>
           Помощь с выбором
         </Button>
         <Modal
-          title="Помощь с выбором древесины"
+          title="Помощь с выбором дров"
           visible={showHelpForm}
           onCancel={handleHelpFormClose}
           footer={null}
         >
           <Form>
-            <Form.Item label="Выберите назначение древесины" name="woodPurpose">
-              <Radio.Group onChange={(e) => setSelectedWoodPurpose(e.target.value)}>
+            <Form.Item label="Выберите назначение дров" name="woodPurpose">
+              <Radio.Group
+                onChange={(e) => setSelectedWoodPurpose(e.target.value)}
+                style={{ display: 'flex', flexDirection: 'column' }}
+              >
                 {helpFormOptions.map((option) => (
                   <Radio key={option.value} value={option.value}>
                     {option.label}
@@ -70,6 +66,13 @@ const ProductsPage: React.FC = () => {
           </Form>
         </Modal>
       </div>
+      <Row gutter={[16, 16]} style={{ marginTop: 24 }}>
+        {products.map((product) => (
+          <Col key={product.id} xs={8} sm={8} md={8} lg={8}>
+            <CatalogCard product={product} />
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 };

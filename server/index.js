@@ -264,14 +264,23 @@ app.post('/api/woodsAdd', async (req, res) => {
 });
 
 app.get('/api/orderDelete/:orderId', async (req, res) => {
-  
-    const { orderID } = req.params;
-    console.log(orderID)
+  const orderId = req.params.orderId; // Здесь исправлено на req.params
+  console.log(orderId);
 
-    const existingOrder = await Order.findOne({ orderID });
-    console.log(existingOrder)
+  try {
+    const existingOrder = await Order.findOne({ _id: orderId });
+    console.log(existingOrder);
 
-    await Order.deleteOne({_id: existingOrder._id});
+    if (existingOrder) {
+      await Order.deleteOne({ _id: existingOrder._id });
+      // res.status(200).json({ success: true, message: 'Order deleted successfully.' });
+    } else {
+      // res.status(404).json({ success: false, message: 'Order not found.' });
+    }
+  } catch (error) {
+    // console.error('Error deleting order:', error);
+    // res.status(500).json({ success: false, message: 'Internal server error.' });
+  }
 });
 
 app.get('/', (req, res) => {

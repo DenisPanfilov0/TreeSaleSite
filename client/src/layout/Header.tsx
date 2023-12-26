@@ -32,14 +32,14 @@ const Header = () => {
       }}
     >
         <Space>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+          {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
             <Image src={logo} alt="Logo" preview={false} style={{ height: '50px' }} />
-          </div>
+          </div> */}
           <Link to='/'><Button type='primary' className="header-button">Главная</Button></Link>
           {user?.isAdmin && <Link to='/admin'><Button type='primary' className="header-button">Админ</Button></Link>}
-          {user?.isAdmin && <Link to='/woodCount'><Button type='primary' className="header-button">Древесина</Button></Link>}
+          {user?.isAdmin && <Link to='/woodCount'><Button type='primary' className="header-button">Склад</Button></Link>}
           <Link to='/SampleContractPage'><Button type='primary' className="header-button">Договор</Button></Link>
-          <Link to='/delivery'><Button type='primary' className="header-button">Доставка</Button></Link>
+          <Link to='/deliveryAndPayment'><Button type='primary' className="header-button">Доставка</Button></Link>
           <Link to='/catalog'><Button type='primary' className="header-button">Каталог</Button></Link>
           {!user && <><Link to='/login'><Button type='primary' className="header-button">Войти</Button></Link><Link to='/register'><Button type='primary'>Регистрация</Button></Link></>}
           {user && <Link to='/profile'><Button type='primary' className="header-button">Профиль</Button></Link>}
