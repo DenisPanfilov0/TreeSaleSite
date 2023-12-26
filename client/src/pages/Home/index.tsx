@@ -3,7 +3,7 @@
 import React from 'react';
 import { Row, Col, Typography, Button } from 'antd';
 import firstImage from './FirstImage.jpg';
-import secondImage from './SecondImage.jpg';
+import secondImage from './55555666666.jpg';
 
 const HomePage: React.FC = () => {
   return (
@@ -25,23 +25,6 @@ const HomePage: React.FC = () => {
             alt="Second Image"
             style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '8px' }}
           />
-          <Typography.Paragraph style={{ marginTop: '16px' }}>
-            Схема сотрудничества будет выглядеть:
-            <br />
-            Шаг 1. Перейти в каталог и заполнить форму по заказу дров.
-            <br />
-            Шаг 2. На указанный Вами номер придет смс с номером заказа и датой доставки.
-            <br />
-            Шаг 3. Доставка дров с бесплатной разгрузкой.
-            <br />
-            Шаг 4. Оплата:
-            <br />
-            ⦁	Наличными;
-            <br />
-            ⦁	Банковской картой;
-            <br />
-            ⦁	Возможен безналичный расчет.
-          </Typography.Paragraph>
         </Col>
       </Row>
     </div>
