@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
             alt="First Image"
             style={{ maxWidth: '100%', maxHeight: '100%', borderRadius: '8px' }}
           />
-          <Typography.Paragraph style={{ marginTop: '16px' }}>
+          <Typography.Paragraph style={{ marginTop: '16px', fontWeight: 'bold', fontSize: '1.39em' }}>
             Дрова от производителя с доставкой по г. Минску и Минской области. Осуществим резку и колку дров по индивидуальному заказу.
           </Typography.Paragraph>
         </Col>
