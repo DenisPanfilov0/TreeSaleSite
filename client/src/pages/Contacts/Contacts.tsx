@@ -52,6 +52,7 @@ const data: Contact[] = [
 ];
 
 const ContactTable: React.FC = () => {
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '30px', width: '65vw', margin: '0 auto', fontSize: '1.3em' }}>
       <Table
