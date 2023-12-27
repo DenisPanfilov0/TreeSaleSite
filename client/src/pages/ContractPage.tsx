@@ -8,17 +8,9 @@ import { products } from './CatalogCard/types';
 import { Form } from 'antd';
 
 
-
-// const ImageOverlay = ({ text }) => (
-//   <div className="contract_date">
-//     <p>{text}</p>
-//     {/* Другие элементы или текст */}
-//   </div>
-// );
-
-
 const ContractPage = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   const location = useLocation();
   const { order } = location.state || {}; // Извлекаем данные заказа из состояния маршрута
@@ -59,14 +51,34 @@ const ContractPage = () => {
     handleDeliveryChange(order.deliveryCost);
   }, [order.deliveryCost]);
 
+  useEffect(() => {
+    const printHandler = () => {
+      navigate(-1);
+    };
+
+    window.addEventListener('afterprint', printHandler);
+
+    return () => {
+      window.removeEventListener('afterprint', printHandler);
+    };
+  }, [navigate]);
+
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      window.print();
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
   return (
     <div className="contract-page">
       <div className="contract-content">
-        <h1>Договор</h1>
-        <p>Имя пользователя: {/*user.username*/}</p>
-        <p>Email: {/*user.email*/}</p>
-        <p>Детали заказа: {/*order.details*/}</p>
-        <button onClick={() => window.print()}>Печать</button>
+        {/* <button onClick={() => window.print()}>Печать</button> */}
+        {/* <button id="printButton" onClick={() => window.print()}>Печать</button> */}
       </div>
       <div className="image-scroll-container">
         <img src="/image/dogovor_po_drovam2_page-0001.jpg" alt="Image 1" />
@@ -85,7 +97,7 @@ const ContractPage = () => {
         <div className="full_delivery_address">{order.deliveryAddress}</div>
         <div className="phone_number">{order.phoneNumber}</div>
         <div className="passport_series_number">{order.passportSeriesNumber}</div>
-        <div className="passport_issued_by">{order.passportIssuedBy}</div>
+        <div className="passport_issued_by">{order.passportIssuedBy} {order.dateOfIssued}</div>
         {/* <ImageOverlay text="Текст поверх изображения 2" /> */}
       </div>
     </div>

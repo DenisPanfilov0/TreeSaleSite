@@ -59,7 +59,7 @@ const ContactTable: React.FC = () => {
         dataSource={data}
         pagination={false}
         bordered={true}
-        style={{ width: '100%' }}
+        style={{ width: '100%'}}
       />
       <img
         src={firstImage}
