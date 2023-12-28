@@ -168,7 +168,7 @@ const AdminPanel: React.FC = () => {
       dataIndex: 'deliveryCost',
       key: 'deliveryCost',
       render: (additionalService: string) => {
-        return additionalService === '30' ? 'до 30 км' : additionalService === '60' ? 'до 60 км' : additionalService === '100' ? 'до 100 км' : additionalService;
+        return additionalService === '30' ? 'до 30 км' : additionalService === '60' ? 'до 60 км' : additionalService === '100' ? 'до 100 км' : "Самовывоз";
       },
     },
     {

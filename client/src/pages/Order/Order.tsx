@@ -24,6 +24,7 @@ import {
 } from './store';
 
 import { IOrder } from './types';
+import { fetchWoodQuantityFx, updateWoodQuantityFx } from '../WoodCount/store';
 
 const { TextArea } = Input;
 
@@ -45,12 +46,26 @@ const Order: React.FC = () => {
 
   const [minDeliveryDate, setMinDeliveryDate] = useState<Date | null>(null);
   const [deliveryOption, setDeliveryOption] = useState<string>();
+  const [availableQuantity, setAvailableQuantity] = useState<number | null>(null);
 
   useEffect(() => {
     const today = new Date();
     today.setDate(today.getDate() + 1); 
     setMinDeliveryDate(today);
   }, []);
+
+  useEffect(() => {
+    const updateQuantity = async () => {
+      try {
+        const quantity = await fetchWoodQuantityFx(product?.name);
+        setAvailableQuantity(quantity);
+      } catch (error) {
+        console.error('Ошибка при получении количества товара:', error);
+      }
+    };
+
+    updateQuantity();
+  }, [product]);
 
   const disabledDate = (current: any) => {
     if (minDeliveryDate) {
@@ -95,15 +110,38 @@ const Order: React.FC = () => {
   const [isPaymentVisible, setIsPaymentVisible] = useState(false);
 
  
-  const onFinish = async (values: IOrder) => { createOrder({
-    ...values, 
-    finalPrice, 
-    user_id: user?._id, 
-    product_id: product.id,
-    numberCard: cardNumber,
-    dateCard: expiryDate,
-    cvvCard: cvv,
-  }); navigate('/profile')}
+  const onFinish = async (values: IOrder) => {
+    try {
+      // Проверяем, достаточно ли товара на складе
+      const availableQuantity = await fetchWoodQuantityFx(product.name);
+      const requestedQuantity = values.amount;
+      
+      if (requestedQuantity > availableQuantity) {
+        // Если товара недостаточно, вы можете вывести сообщение об ошибке
+        console.error('Недостаточно товара на складе!');
+        return;
+      }
+
+      // Уменьшаем количество товара на складе
+      await updateWoodQuantityFx({ productName: product.name, newQuantity: availableQuantity - requestedQuantity });
+
+      // Оформляем заказ
+      createOrder({
+        ...values,
+        finalPrice,
+        user_id: user?._id,
+        product_id: product.id,
+        numberCard: cardNumber,
+        dateCard: expiryDate,
+        cvvCard: cvv,
+      });
+
+      // Переход на страницу профиля
+      navigate('/profile');
+    } catch (error) {
+      console.error('Ошибка при оформлении заказа:', error);
+    }
+  };
 // const onFinish = async (values: IOrder) => {
 //   console.log(values);
 // }
@@ -188,18 +226,20 @@ const Order: React.FC = () => {
 
         <Form.Item
           label="Количество"
-          name="amount" 
+          name="amount"
           rules={[
-          {
-            required: true,
-            message: 'Введите количество товара!',
-          },
-          ]}>
+            {
+              required: true,
+              message: 'Введите количество товара!',
+            },
+          ]}
+        >
           <InputNumber
             formatter={(value) => (value ? `${value}` : '')}
-            parser={(value: any) => Math.max(0, value ? Number(value.replace(/\D/g, '')) : 0)} 
-            min={0} 
-  />
+            parser={(value: any) => Math.max(0, value ? Number(value.toString().replace(/\D/g, '')) : 0)}
+            min={0}
+            max={availableQuantity !== null ? availableQuantity : undefined}
+          />
         </Form.Item>
 
         <Form.Item label="Доп. услуги" name="additionalService" rules={[{ required: true, message: 'Выберите доп. услуги' }]}>

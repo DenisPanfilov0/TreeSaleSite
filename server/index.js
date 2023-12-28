@@ -220,7 +220,6 @@ app.get('/api/woods', async (req, res) => {
   try {
     const { productName } = req.query;
 
-    // Проверка наличия имени в запросе
     if (!productName) {
       return res.status(400).json({ success: false, error: 'Missing productName parameter' });
     }
@@ -230,7 +229,7 @@ app.get('/api/woods', async (req, res) => {
     if (wood) {
       res.json({ success: true, wood });
     } else {
-      res.json({ success: true, wood: null }); // или можно вернуть пустой массив в зависимости от ваших требований
+      res.json({ success: true, wood: null }); 
     }
   } catch (error) {
     console.error('Error fetching woods:', error);
@@ -259,6 +258,46 @@ app.post('/api/woodsAdd', async (req, res) => {
     }
   } catch (error) {
     console.error('Error saving wood:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+app.post('/api/updateWoodQuantity', async (req, res) => {
+  const { productName, newQuantity } = req.body;
+
+  try {
+    const existingWood = await Wood.findOne({ productName });
+
+    if (existingWood) {
+      existingWood.quantity = newQuantity;
+      await existingWood.save();
+      res.json({ success: true, wood: existingWood });
+    } else {
+      res.status(404).json({ success: false, error: 'Wood not found' });
+    }
+  } catch (error) {
+    console.error('Error updating wood quantity:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+app.get('/api/woodQuantity', async (req, res) => {
+  const { productName } = req.query;
+
+  try {
+    if (!productName) {
+      return res.status(400).json({ success: false, error: 'Missing productName parameter' });
+    }
+
+    const wood = await Wood.findOne({ productName });
+
+    if (wood) {
+      res.json({ success: true, quantity: wood.quantity });
+    } else {
+      res.json({ success: true, quantity: 0 }); // или можно вернуть другое значение в зависимости от требований
+    }
+  } catch (error) {
+    console.error('Error fetching wood quantity:', error);
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
