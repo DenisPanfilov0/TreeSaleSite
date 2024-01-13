@@ -89,7 +89,7 @@ const ContractPage = () => {
         <div className="additional_service">{totalCostWithService}</div>
         <div className="cost">{order.amount * totalCostWithService}</div>
         <div className="delivery_cost">{deliveryCost}</div>
-        <div className="total_cost">{order.amount * totalCostWithService + totalCostWithService}</div>
+        <div className="total_cost">{order.amount * totalCostWithService + deliveryCost}</div>
         <div className="delivery_address">{order.deliveryAddress}</div>
         {/* <div className="delivery_address"><p>"Адрес Доставки"</p></div> */}
         <img src="/image/dogovor_po_drovam2_page-0002.jpg" alt="Image 2" />

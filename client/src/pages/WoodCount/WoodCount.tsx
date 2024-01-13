@@ -28,10 +28,13 @@ interface CatalogCardProps {
 
 const WoodCount: React.FC<CatalogCardProps> = ({ product }) => {
 
+  const [inputQuantity, setInputQuantity] = useState<number>();
+  
   const isLoading = useUnit($isLoading);
   const onFinish = async (values: IWood) => {
     const data: IWood = { ...values, productName };
     changeWoodCount(data);
+    setInputQuantity(data.quantity)
   };
 
 
@@ -47,12 +50,20 @@ const WoodCount: React.FC<CatalogCardProps> = ({ product }) => {
       
         const response = await axios.get(`http://localhost:3000/api/woods?productName=${product.name}`);
         const wood = response.data.wood;
-      
-      setWoodCount(wood.quantity);
+        setInputQuantity(wood.quantity);
     };
 
     fetchData();
   }, [product.name]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      
+        console.log('изменили')
+    };
+
+    fetchData();
+  }, [inputQuantity]);
 
   const handleInputChange = (productName: string) => {
     setProductName(productName);
@@ -93,7 +104,7 @@ const WoodCount: React.FC<CatalogCardProps> = ({ product }) => {
           </div>
         )}
         <div style={{ marginTop: '8px' }}>
-          <Text strong>Доступное количество дров: {woodCount}</Text>
+          <Text strong>Доступное количество дров: {inputQuantity}</Text>
         </div>
         
           <Form onFinish={onFinish}>

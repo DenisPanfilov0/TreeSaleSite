@@ -26,4 +26,5 @@ export interface IOrder {
     numberCard: string;
     dateCard: string;
     cvvCard: string;
+    dateCreateOrder: string;
   }

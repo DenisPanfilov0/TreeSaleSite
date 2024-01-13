@@ -1,5 +1,5 @@
 import React from 'react';
-import './SampleContractPage.css'; // Создайте файл ContractPage.css для стилей
+import './SampleContractPage.css';
 import { Button } from 'antd';
 
 const SampleContractPage = () => {

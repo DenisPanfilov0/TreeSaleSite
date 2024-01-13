@@ -189,7 +189,7 @@ const onFinish = async (values: IOrder) => {
         labelCol={{ span: 7 }}
         wrapperCol={{ span: 20 }}
         layout="horizontal"
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: 700, paddingTop: '20px' }}
         onFinish={onFinish}
         initialValues={{ 
             productName: order.productName,
@@ -223,10 +223,6 @@ const onFinish = async (values: IOrder) => {
         </Form.Item>
 
         <Form.Item label="Отчество" name="middleName" rules={[{ required: true, message: 'Введите отчество' }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Адрес доставки" name="deliveryAddress" rules={[{ required: true, message: 'Введите адрес доставки' }]}>
           <Input />
         </Form.Item>
 
@@ -277,6 +273,10 @@ const onFinish = async (values: IOrder) => {
 
         {deliveryOption === 'delivery' && (
           <>
+          <Form.Item label="Адрес доставки" name="deliveryAddress" rules={[{ required: true, message: 'Введите адрес доставки' }]}>
+            <Input />
+          </Form.Item>
+
           <Form.Item label="Дата Доставки" name="deliveryDate" rules={[{ required: true, message: 'Введите дату доставки' }]}>
             <DatePicker showTime={false} format="YYYY-MM-DD" disabledDate={disabledDate} />
           </Form.Item>

@@ -142,6 +142,13 @@ const UserProfile: React.FC = () => {
       title: 'Адрес доставки',
       dataIndex: 'deliveryAddress',
       key: 'deliveryAddress',
+      render: (text: any, record: { deliveryAddress: string }) => {
+        if (record.deliveryAddress) {
+        return record.deliveryAddress;
+        } else {
+        return 'Самовывоз';
+        }
+      },
     },
     {
       title: 'Дата доставки',

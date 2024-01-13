@@ -10,7 +10,6 @@
 .contract_date {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 50pt;  */
   left: 370pt;
   top: 70pt;
   font-size: 9pt;
@@ -19,7 +18,6 @@
 .name_date {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 316pt;  */
   left: 68pt;
   top: 111pt;
   font-size: 6pt;
@@ -28,7 +26,6 @@
 .product_name {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 315pt;  */
   left: 90pt;
   top: 210pt;
   font-size: 6pt;
@@ -37,7 +34,6 @@
 .amount {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 283pt;  */
   left: 154pt;
   top: 210pt;
   font-size: 6pt;
@@ -46,7 +42,6 @@
 .additional_service {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 200pt; */
   left: 233pt; 
   top: 210pt;
   font-size: 6pt;
@@ -55,7 +50,6 @@
 .cost {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 147pt;  */
   left: 282pt;
   top: 210pt;
   font-size: 6pt;
@@ -64,7 +58,6 @@
 .delivery_cost {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 89pt;  */
   left: 337pt;
   top: 210pt;
   font-size: 6pt;
@@ -73,7 +66,6 @@
 .total_cost {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 31pt;  */
   left: 395pt;
   top: 210pt;
   font-size: 6pt;
@@ -82,7 +74,6 @@
 .delivery_address {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 302pt;  */
   left: 68pt;
   top: 439pt;
   font-size: 6pt;
@@ -91,7 +82,6 @@
 .full_name_date {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 316pt;  */
   left: 251pt;
   top: 1144pt;
   font-size: 6pt;
@@ -100,7 +90,6 @@
 .full_delivery_address {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 316pt;  */
   left: 272pt;
   top: 1161pt;
   font-size: 6pt;
@@ -109,7 +98,6 @@
 .phone_number {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 316pt;  */
   left: 272pt;
   top: 1177pt;
   font-size: 6pt;
@@ -118,7 +106,6 @@
 .passport_series_number {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 316pt;  */
   left: 302pt;
   top: 1209pt;
   font-size: 6pt;
@@ -127,7 +114,6 @@
 .passport_issued_by {
   position: absolute;
   /* border: 5px solid red; */
-  /* right: 316pt;  */
   left: 312pt;
   top: 1225pt;
   font-size: 6pt;

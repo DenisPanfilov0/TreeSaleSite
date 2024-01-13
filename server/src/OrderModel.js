@@ -96,6 +96,10 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  dateCreateOrder: {
+    type: String,
+    required: false,
+  },
 });
 
 const Order = mongoose.model('Order', orderSchema);

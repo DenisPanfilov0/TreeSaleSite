@@ -109,6 +109,9 @@ const Order: React.FC = () => {
 
   const [isPaymentVisible, setIsPaymentVisible] = useState(false);
 
+  const currentDate = new Date();
+  const formattedDate = `${currentDate.getDate()}.${currentDate.getMonth() + 1}.${currentDate.getFullYear()}`;
+
  
   const onFinish = async (values: IOrder) => {
     try {
@@ -134,6 +137,7 @@ const Order: React.FC = () => {
         numberCard: cardNumber,
         dateCard: expiryDate,
         cvvCard: cvv,
+        dateCreateOrder: formattedDate,
       });
 
       // Переход на страницу профиля
@@ -194,7 +198,7 @@ const Order: React.FC = () => {
         labelCol={{ span: 7 }}
         wrapperCol={{ span: 20 }}
         layout="horizontal"
-        style={{ maxWidth: 700 }}
+        style={{ maxWidth: 700, paddingTop: '20px' }}
         onFinish={onFinish}
         initialValues={{ productName: product.name, amount: 0, deliveryOption: 'pickup'}}
       >
@@ -209,10 +213,6 @@ const Order: React.FC = () => {
         </Form.Item>
 
         <Form.Item label="Отчество" name="middleName" rules={[{ required: true, message: 'Введите отчество' }]}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Адрес доставки" name="deliveryAddress" rules={[{ required: true, message: 'Введите адрес доставки' }]}>
           <Input />
         </Form.Item>
 
@@ -265,6 +265,10 @@ const Order: React.FC = () => {
 
         {deliveryOption === 'delivery' && (
           <>
+          <Form.Item label="Адрес доставки" name="deliveryAddress" rules={[{ required: true, message: 'Введите адрес доставки' }]}>
+            <Input />
+          </Form.Item>
+
           <Form.Item label="Дата Доставки" name="deliveryDate" rules={[{ required: true, message: 'Введите дату доставки' }]}>
             <DatePicker showTime={false} format="YYYY-MM-DD" disabledDate={disabledDate} />
           </Form.Item>

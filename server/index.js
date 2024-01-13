@@ -13,10 +13,10 @@ const cookieParser = require('cookie-parser');
 const register = require('./src/RegisterUtils.js')
 const Order = require('./src/OrderModel.js');
 const Wood = require('./src/WoodModel.js');
+const axios = require('axios');
+
 
 mongoose.connect('mongodb+srv://Alexander:1q2w3e4r@cluster0.jwcpdzh.mongodb.net/all_users', {
-  // useUnifiedTopology: true,
-  // useNewUrlParser: true,
 });
 
 const db = mongoose.connection;

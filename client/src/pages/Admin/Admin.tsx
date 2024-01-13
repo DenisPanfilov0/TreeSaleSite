@@ -113,6 +113,17 @@ const AdminPanel: React.FC = () => {
       ),
     },
     {
+      title: 'Дата заказа',
+      dataIndex: 'dateCreateOrder',
+      key: 'dateCreateOrder',
+      // render: (text: any, record: { deliveryDate: string }) => {
+      //     // const dateObject = new Date(record.deliveryDate);
+      //     // const formattedDate = `${dateObject.getFullYear()}-${(dateObject.getMonth() + 1).toString().padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')}`;
+      //     const formattedDate = 
+      //     return formattedDate;
+      // },
+    },
+    {
       title: 'ФИО',
       dataIndex: 'lastName',
       key: 'lastName',
@@ -130,6 +141,13 @@ const AdminPanel: React.FC = () => {
       title: 'Адрес доставки',
       dataIndex: 'deliveryAddress',
       key: 'deliveryAddress',
+      render: (text: any, record: { deliveryAddress: string }) => {
+        if (record.deliveryAddress) {
+        return record.deliveryAddress;
+        } else {
+        return 'Самовывоз';
+        }
+      },
     },
     {
       title: 'Дата доставки',
